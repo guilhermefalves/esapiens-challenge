@@ -3,13 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Laravel\Lumen\Auth\Authorizable;
 
 class User extends Model
 {
-    // use Authenticatable, Authorizable;
     use SoftDeletes;
 
     /**
