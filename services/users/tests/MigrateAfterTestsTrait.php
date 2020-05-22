@@ -8,6 +8,6 @@ trait MigrateAfterTestsTrait
     {
         parent::setUpBeforeClass();
         echo "Migrating database\n";
-        exec('APP_ENV="testing" php artisan migrate:refresh');
+        exec('APP_ENV="testing" php artisan migrate:fresh');
     }
 }
