@@ -1,0 +1,35 @@
+@baseURL=http://localhost:4001
+
+POST {{baseURL}}/user
+Content-Type: application/json
+Accept: application/json
+
+{
+    "name": "Guilherme",
+    "email": "a@a.com",
+    "password": "123",
+    "subscriber": false
+}
+
+GET {{baseURL}}/user/1
+Accept: application/json
+
+PUT {{baseURL}}/user/1
+Content-Type: application/json
+Accept: application/json
+
+{
+    "subscriber": true
+}
+
+DELETE {{baseURL}}/user/2
+Accept: application/json
+
+POST {{baseURL}}/login
+Content-Type: application/json
+Accept: application/json
+
+{
+    "email": "a@a.com",
+    "password": "123"
+}
