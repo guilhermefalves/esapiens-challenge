@@ -24,7 +24,6 @@ class TransactionController extends Controller
      * Regras de validação para POST
      */
     private array $validationRules = [
-        'user_id'    => 'integer|required',
         'comment_id' => 'integer|required_if:type,out',
         'coins'      => 'integer|required|min:1',
         'type'       => 'in:in,out|required'
@@ -42,7 +41,7 @@ class TransactionController extends Controller
         
         // Se os dados forem inválidos, já retorno
         $validator = Validator::make($data, $this->validationRules);
-        if ($validator->failed()) {
+        if ($validator->fails()) {
             $fails = $validator->errors()->all();
             return $this->response(400, compact('fails'), 'Parâmetros inválidos');
         }
