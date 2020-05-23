@@ -83,7 +83,7 @@ class UserController extends BaseCRUD
         ]);
 
         $headerDotPayload = sprintf('%s.%s', $header, $payload);
-        $password  = config('jwt.password');
+        $password  = config('jwt.key');
         $signature = hash_hmac('sha256', $headerDotPayload, $password, true);
         $signature = $this->encode($signature);
     

@@ -10,5 +10,5 @@ return [
     */
     'expireAfter' => env('JWT_EXP', 10),
 
-    'password' => env('JWT_PASS')
+    'key' => env('JWT_KEY')
 ];

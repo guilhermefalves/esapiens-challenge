@@ -1,7 +1,7 @@
 version: "3.5"
 
 services:
-    mysql:
+    mysql_challenge:
         image: mysql:8.0
         container_name: challenge.mysql
         volumes:

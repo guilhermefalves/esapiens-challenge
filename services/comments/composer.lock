@@ -329,12 +329,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guilhermefalves/lumen-base-crud.git",
-                "reference": "8106ae7d9cf85321b19f96c1039a5e930e396a30"
+                "reference": "26b51c08f7a5cbb02923c4be4af3c415acbe600c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guilhermefalves/lumen-base-crud/zipball/8106ae7d9cf85321b19f96c1039a5e930e396a30",
-                "reference": "8106ae7d9cf85321b19f96c1039a5e930e396a30",
+                "url": "https://api.github.com/repos/guilhermefalves/lumen-base-crud/zipball/26b51c08f7a5cbb02923c4be4af3c415acbe600c",
+                "reference": "26b51c08f7a5cbb02923c4be4af3c415acbe600c",
                 "shasum": ""
             },
             "require": {
@@ -358,7 +358,7 @@
                 }
             ],
             "description": "The basic CRUD for Lumen MicroFramework",
-            "time": "2020-05-22T01:01:48+00:00"
+            "time": "2020-05-22T23:38:10+00:00"
         },
         {
             "name": "illuminate/auth",
