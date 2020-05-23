@@ -1,0 +1,31 @@
+@baseURL=http://localhost:4004
+@token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiR3VpbGhlcm1lIiwiZW1haWwiOiJhQGEuY29tIiwic3Vic2NyaWJlciI6ZmFsc2UsImRlbGV0ZWRfYXQiOm51bGwsImNyZWF0ZWRfYXQiOiIyMDIwLTA1LTIyVDAzOjM0OjUyLjAwMDAwMFoiLCJ1cGRhdGVkX2F0IjoiMjAyMC0wNS0yMlQwMzozNDo1Mi4wMDAwMDBaIn0sImlhdCI6MTU5MDI0ODQ3MiwiZXhwIjoxNTkwNjA4NDcyfQ.xuHBA9MQY0frsLqsq20UyGr_EVkADUFTE08YlpAPAOk
+
+POST {{baseURL}}/transaction
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+    "coins": 100,
+    "type": "in"
+}
+
+POST {{baseURL}}/transaction
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+    "comment_id": 1,
+    "coins": 10,
+    "type": "out"
+}
+
+POST {{baseURL}}/balance
+Authorization: Bearer {{token}}
+Accept: application/json
+
+POST {{baseURL}}/transaction/confirm/6
+Authorization: Bearer {{token}}
+Accept: application/json
