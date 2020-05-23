@@ -9,9 +9,11 @@ class UserControllerTest extends TestCase
 {
     use MigrateAfterTestsTrait;
 
-    public function testCreateSuccess()
+    /**
+     * @return array
+     */
+    public function testCreateSuccess(): array
     {
-        echo "testCreateSuccess\n";
         $user = factory(User::class)->make()->makeVisible('password')->toArray();
         $this->post('/user', $user)->seeJsonStructure([
             'message', 'status' , 'id'
@@ -50,7 +52,6 @@ class UserControllerTest extends TestCase
             'status', 'message', 'jwt'
         ]);
 
-        // TODO: generate JWT and test
         $this->response->assertStatus(200);
     }
 

@@ -6,9 +6,15 @@ use App\Models\User;
 use LumenBaseCRUD\Controller as BaseCRUD;
 
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\{Hash, Validator};
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\{Request, JsonResponse};
 
+/**
+ * Controller dos usuários
+ * 
+ * @author Guilherme Alves <guihalves20@gmail.com>
+ */
 class UserController extends BaseCRUD
 {
     protected $model = User::class;
@@ -37,6 +43,12 @@ class UserController extends BaseCRUD
         $data['password'] = Hash::make($data['password']);
     }
 
+    /**
+     * A partir de um usuário e senha retorna uma JWT para o usuário
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function login(Request $request): JsonResponse
     {
         $data = $request->all();
@@ -79,7 +91,7 @@ class UserController extends BaseCRUD
         $payload  = $this->encode([
             'user' => $user->toArray(),
             'iat'  => $now->unix(),
-            'exp'  => $now->addMinutes(config('jwt.expireAfter'))->unix()
+            'exp'  => $now->add(config('jwt.expireAfter'))->unix()
         ]);
 
         $headerDotPayload = sprintf('%s.%s', $header, $payload);
