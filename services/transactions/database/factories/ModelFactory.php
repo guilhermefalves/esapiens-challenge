@@ -23,13 +23,14 @@ $factory->define(Transaction::class, function (Faker $faker) {
     $transactionID = ($systemTransaction)
         ? Transaction::inRandomOrder()->where('system_transaction', false)->get('id')->first()
         : null;
+    $coins = $faker->randomFloat(2, 0, 999.99);
 
     return [
         'user_id'        => $faker->numberBetween(1, 5),
         'comment_id'     => $faker->numberBetween(1, 20),
         'transaction_id' => $transactionID,
 
-        'coins' => $type == 'in' ? $faker->randomFloat(2) : -$faker->randomFloat(2),
+        'coins' => $type == 'in' ? $coins : -$coins,
         'type'  => $type,
         'tax'   => config('app.systemTax'),
 

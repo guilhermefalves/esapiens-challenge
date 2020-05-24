@@ -22,9 +22,20 @@ Accept: application/json
     "type": "out"
 }
 
+// Retorna o saldo do usuário sem contar taxas do sistema
 POST {{baseURL}}/balance
 Authorization: Bearer {{token}}
-Accept: application/json
+Accept       : application/json
+Content-Type: application/json
+
+{
+    "withouttax": true
+}
+
+// Retorna o saldo do usuário já descontando as taxas do sistema
+POST {{baseURL}}/balance
+Authorization: Bearer {{token}}
+Accept       : application/json
 
 POST {{baseURL}}/transaction/confirm/6
 Authorization: Bearer {{token}}

@@ -56,7 +56,7 @@ class TransactionController extends Controller
 
         // Verifico se o usuário tem créditos suficientes para a transaction, ou
         // seja, a transaction + taxa do sistema
-        $requiredCoins = $data['coins'] * (1 + $data['tax']);
+        $requiredCoins = abs($data['coins']) * (1 + $data['tax']);
         $requiredCoins = ($data['type'] == 'in') ? 0 : $requiredCoins;
         if (!$this->hasBalance($user->id, $requiredCoins)) {
             return $this->response(402, [], 'Créditos insuficientes');
@@ -89,6 +89,12 @@ class TransactionController extends Controller
         $user = $this->getUserFromAuthHeader($auth);
 
         $userBalance = $this->getUserBalance($user->id);
+
+        // Retorna o saldo do usuário já descontando (ou não) as taxas
+        $withoutTax  = (bool) $request->get('withouttax');
+        $systemTax   = $withoutTax ? 1 : 1 - config('app.systemTax');
+        $userBalance = $userBalance * $systemTax;
+        
         return $this->response(200, compact('userBalance'));
     }
 
