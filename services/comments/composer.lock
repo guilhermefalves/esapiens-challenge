@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "edc79142cc5bd1cc02a269fc6e341620",
+    "content-hash": "252b68c6c98d60fb35412559c8c506f1",
     "packages": [
         {
             "name": "brick/math",
@@ -379,12 +379,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guilhermefalves/lumen-base-crud.git",
-                "reference": "26b51c08f7a5cbb02923c4be4af3c415acbe600c"
+                "reference": "7289cb79b2d9df49d557befc6e60adea13a3f876"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guilhermefalves/lumen-base-crud/zipball/26b51c08f7a5cbb02923c4be4af3c415acbe600c",
-                "reference": "26b51c08f7a5cbb02923c4be4af3c415acbe600c",
+                "url": "https://api.github.com/repos/guilhermefalves/lumen-base-crud/zipball/7289cb79b2d9df49d557befc6e60adea13a3f876",
+                "reference": "7289cb79b2d9df49d557befc6e60adea13a3f876",
                 "shasum": ""
             },
             "require": {
@@ -408,7 +408,7 @@
                 }
             ],
             "description": "The basic CRUD for Lumen MicroFramework",
-            "time": "2020-05-22T23:38:10+00:00"
+            "time": "2020-05-24T18:45:52+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -1484,6 +1484,54 @@
             "time": "2020-04-17T13:49:09+00:00"
         },
         {
+            "name": "illuminate/redis",
+            "version": "v7.12.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/illuminate/redis.git",
+                "reference": "a536d42fd17618e1d934b424bf4d8653b35d1247"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/illuminate/redis/zipball/a536d42fd17618e1d934b424bf4d8653b35d1247",
+                "reference": "a536d42fd17618e1d934b424bf4d8653b35d1247",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^7.0",
+                "illuminate/support": "^7.0",
+                "php": "^7.2.5"
+            },
+            "suggest": {
+                "ext-redis": "Required to use the phpredis connector (^4.0|^5.0).",
+                "predis/predis": "Required to use the predis connector (^1.0)."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "7.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Illuminate\\Redis\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "The Illuminate Redis package.",
+            "homepage": "https://laravel.com",
+            "time": "2020-04-24T09:01:47+00:00"
+        },
+        {
             "name": "illuminate/session",
             "version": "v7.12.0",
             "source": {
@@ -2211,6 +2259,56 @@
                 "type"
             ],
             "time": "2020-03-21T18:07:53+00:00"
+        },
+        {
+            "name": "predis/predis",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nrk/predis.git",
+                "reference": "f0210e38881631afeafb56ab43405a92cafd9fd1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nrk/predis/zipball/f0210e38881631afeafb56ab43405a92cafd9fd1",
+                "reference": "f0210e38881631afeafb56ab43405a92cafd9fd1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8"
+            },
+            "suggest": {
+                "ext-curl": "Allows access to Webdis when paired with phpiredis",
+                "ext-phpiredis": "Allows faster serialization and deserialization of the Redis protocol"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Predis\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniele Alessandri",
+                    "email": "suppakilla@gmail.com",
+                    "homepage": "http://clorophilla.net"
+                }
+            ],
+            "description": "Flexible and feature-complete Redis client for PHP and HHVM",
+            "homepage": "http://github.com/nrk/predis",
+            "keywords": [
+                "nosql",
+                "predis",
+                "redis"
+            ],
+            "time": "2016-06-16T16:22:20+00:00"
         },
         {
             "name": "psr/container",

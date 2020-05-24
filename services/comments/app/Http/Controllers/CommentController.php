@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
-
 use LumenBaseCRUD\Controller as BaseCRUD;
 use Firebase\JWT\JWT;
 use App\Libraries\{NotificationService, TransactionService, UserService};
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Redis;
 
 /**
  * Controller das transactions
@@ -54,6 +54,11 @@ class CommentController extends BaseCRUD
 
         // Qauntas moedas estão sendo utilizadas no destaque
         $coins = (isset($data['coins'])) ? $data['coins'] : 0;
+
+        // Verifico se o usuário fez muitos comentários no intervalo de tempo
+        if ($this->madeTooManyComments()) {
+            return $this->response(403, [], 'Você fez muitos comentários nos ultimos minutos');
+        }
 
         // Começo verificando se o usuário pode comentar
         if (!$this->canComment($data['post_id'], (bool) $coins)) {
@@ -117,6 +122,13 @@ class CommentController extends BaseCRUD
             $this->deleteNotification($notificationID);
             return $this->response(500, [], 'Problemas ao confirmar o destaque para o comentário');
         }
+
+        // Se tudo ocorreu bem, vou salvar uma key no redis para contar
+        // quantos comentários o usuário fez no intervalo de tempo
+        $key = sprintf('comment-%d-%d-%d', $this->user->id, $comment->post_id, $comment->id);
+        $keyTTL = config('app.commentsTime');
+        Redis::set($key, $comment->created_at);
+        Redis::expire($key, $keyTTL);
     }
 
     /**
@@ -237,9 +249,6 @@ class CommentController extends BaseCRUD
      */
     private function canComment(int $postID, int $usingCoins): bool
     {
-        // TODO: verificar qtos comentários o usuário fez nos últimos minutos
-        // para isso, quero setar uma keyu no redis com ttl
-
         // Usuários que estão usando coins podem comentar qualquer post
         if ($usingCoins) {
             return true;
@@ -260,6 +269,25 @@ class CommentController extends BaseCRUD
 
         // Posts de assinantes podem receber comentário de qualquer usuário
         return $isPostOfSubscriber;
+    }
+
+    /**
+     * Busca quantos comentários o usuário fez e verifica se ele ainda pode comentar
+     *
+     * @return boolean
+     */
+    private function madeTooManyComments(): bool
+    {
+        // Para todo comentário feito, é criada uma key no Redis. Com isso,
+        // consigo buscar todas as keys que seguem o padrão e conta-las
+        $key = sprintf('comment-%d-*', $this->user->id);
+        $keys = Redis::keys($key);
+
+        // Número de comentários que podem ser feitos em um período de tempo
+        $commentsPerTime = config('app.commentsPerTime');
+
+        // Retorno se o número de comentários feito é maior que o permitido
+        return count($keys) >= $commentsPerTime;
     }
 
     /**

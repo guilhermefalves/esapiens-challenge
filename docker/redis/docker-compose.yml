@@ -1,0 +1,7 @@
+version: "3.5"
+services: 
+    redis_Challenge:
+        image: redis
+        container_name: challenge.redis
+        ports:
+            - "6397:6379"

@@ -9,7 +9,9 @@
         "firebase/php-jwt": "^5.2",
         "guilhermefalves/lumen-base-crud": "dev-master",
         "guzzlehttp/guzzle": "^6.5",
-        "laravel/lumen-framework": "^7.0"
+        "illuminate/redis": "^7.12",
+        "laravel/lumen-framework": "^7.0",
+        "predis/predis": "^1.1"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.9.1",

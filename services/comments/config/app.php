@@ -3,13 +3,16 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | JWT Key
+    | Comments Per TIme
     |--------------------------------------------------------------------------
     |
-    | JWT Key for auth
-    |
+    | How many comments can created by an user in time interval
+    | 
+    | commentsTime in minutes
+    | commentsPerTime number of comments that user can do in the interval (commentsTime)
     */
-    'jwtKey' => env('JWT_KEY'),
+    'commentsTime'    => env('COMMENTS_TIME', 60),
+    'commentsPerTime' => env('COMMENTS_PER_TIME', 5),
 
 
     /*
