@@ -24,4 +24,9 @@ $router->group(['prefix' => 'user'], function() use ($router) {
     $router->delete('/{id:[0-9]+}', 'UserController@delete');
 });
 
+$router->group(['prefix' => 'is'], function() use ($router) {
+    // TODO: authenticated routes
+    $router->post('/subscriber/{id:[0-9]+}', 'UserController@subscriber');
+});
+
 $router->post('/login', 'UserController@login');

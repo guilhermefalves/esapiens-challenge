@@ -64,11 +64,29 @@ class UserController extends BaseCRUD
 
         $user = User::where('email', $data['email'])->first();
         if (!$user || !Hash::check($data['password'], $user->password)) {
-            return $this->response(403, [], 'Senha inválida');
+            return $this->response(403, [], 'Usuário ou senha inválidos');
         }
 
         $jwt = $this->generateJWT($user);
         return $this->response(200, compact('jwt'), "Logged");
+    }
+
+    /**
+     * Verifica e retorna se um usuário é assinante
+     *
+     * @param integer $id
+     * @return JsonResponse
+     */
+    public function subscriber(int $id): JsonResponse
+    {
+        $user = User::where('id', $id)->get('subscriber')->first();
+
+        if (!$user) {
+            return $this->response(404, [], 'Usuário não encontrado');
+        }
+
+        $subscriber = (bool) $user->subscriber;
+        return $this->response(200, ['subscriber' => $subscriber]);
     }
 
     /**
