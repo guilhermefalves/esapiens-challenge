@@ -16,17 +16,6 @@ class TransactionService
 {
     use ServiceTrait;
 
-    public function generateJWT(string $secretKey): string
-    {
-        $now = Carbon::now();
-        $payload = [
-            'iat' => $now->unix(),
-            'exp' => $now->add(config('jwt.expireAfter'))->unix(),
-        ];
-
-        return JWT::encode($payload, $secretKey);
-    }
-
     /**
      * Retorna o saldo de um usuário
      *
@@ -34,8 +23,8 @@ class TransactionService
      */
     public function getBalance(): float
     {
-        // TODO: call POST /balance
-        return 500.00;
+        $response = $this->request('/balance');
+        return $response['userBalance'];
     }
 
     /**
@@ -47,14 +36,13 @@ class TransactionService
      */
     public function create(int $commentID, int $coins): int
     {
-        // TODO: call POST /transaction
-        // $transaction = [
-        //     'comment_id' => $commentID,
-        //     'coins' => $coins,
-        //     'type' => 'out'
-        // ];
-        // $this->request()
-        return 1;
+        $transaction = [
+            'comment_id' => $commentID,
+            'coins' => $coins,
+            'type' => 'out'
+        ];
+        $response = $this->request('/transaction', $transaction);
+        return $response['id'];
     }
 
     /**
@@ -65,7 +53,6 @@ class TransactionService
      */
     public function confirm(int $id): bool
     {
-        // TODO: call /transaction/confirm/$id
-        return true;
+        return $this->requestStatus('/transaction/confirm/' . $id) == 200;
     }
 }

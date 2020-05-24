@@ -25,8 +25,8 @@ class UserService
      */
     public function isSubscriber(int $userID): bool
     {
-        $endpoint = $this->url . '/is/subscriber/' . $userID;
-        $response = $this->request($endpoint, $this->secret);
+        $endpoint = '/is/subscriber/' . $userID;
+        $response = $this->request($endpoint);
 
         return $response["subscriber"] ?? false;
     }

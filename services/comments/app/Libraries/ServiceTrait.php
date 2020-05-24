@@ -47,14 +47,20 @@ trait ServiceTrait
     /**
      * Realiza uma requisição ao service
      *
-     * @param string $url
+     * @param string $endpoint
      * @param array $data
      * @param string $method
-     * @return array
+     * @param boolean $returnStatusCode
+     * @return void
      */
-    public function request(string $url, string $secretKey, array $data = [], string $method = 'POST'): array
-    {
-        $jwt = $this->generateJWT($secretKey);
+    public function request(
+        string $endpoint,
+        array $data = [],
+        string $method = 'POST',
+        bool $returnStatusCode = false
+    ) {
+        $url = $this->url . $endpoint;
+        $jwt = $this->generateJWT($this->secret);
         $client = new GuzzleClient();
 
         try {
@@ -64,7 +70,7 @@ trait ServiceTrait
                     'Content-Type' => 'application/json',
                     'Authorization' => 'Bearer ' . $jwt
                 ],
-            ])->getBody();
+            ]);
         } catch (GuzzleException $e) {
             return [
                 'status' => 'error',
@@ -72,12 +78,33 @@ trait ServiceTrait
             ];
         }
 
+        if ($returnStatusCode) {
+            return $response->getStatusCode();
+        }
+
+        $response = $response->getBody();
         $response = json_decode($response, true);
         if (json_last_error() !== JSON_ERROR_NONE) {
             return [];
         }
 
         return $response;
+    }
+
+    /**
+     * Realiza uma requisição ao service e retorna seus código HTTP
+     *
+     * @param string $endpoint
+     * @param array $data
+     * @param string $method
+     * @return void
+     */
+    public function requestStatus(
+        string $endpoint,
+        array $data = [],
+        string $method = 'POST'
+    ) {
+        return $this->request($endpoint, $data, $method, true);
     }
 
     /**

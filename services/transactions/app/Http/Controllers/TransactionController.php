@@ -69,7 +69,7 @@ class TransactionController extends Controller
         }
 
         if ($created->type == 'in') {
-            return $this->response(201);
+            return $this->response(201, ['id' => $created->id]);
         }
 
         // E por fim, crio a transaction do sistema
@@ -175,7 +175,8 @@ class TransactionController extends Controller
             'tax'     => 0,
             'coins'   => $transaction->coins * $transaction->tax,
             'type'    => 'out',
-            'transaction_id'     => $transaction->id,
+            'comment_id'     => $transaction->comment_id,
+            'transaction_id' => $transaction->id,
             'system_transaction' => true
         ];
 
@@ -185,7 +186,7 @@ class TransactionController extends Controller
             return $this->response(500, [], 'Problemas ao criar a transaction');
         }
 
-        return $this->response(201);
+        return $this->response(201, ['id' => $transaction->id]);
     }
 
     /**

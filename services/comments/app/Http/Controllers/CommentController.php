@@ -41,6 +41,12 @@ class CommentController extends BaseCRUD
         'content' => 'string|required'
     ];
 
+    /**
+     * Executada antes da criação de um comentário 
+     *
+     * @param array $data
+     * @return void
+     */
     protected function preStore(array &$data)
     {
         // Adiciono o id do usuário logado
@@ -53,7 +59,7 @@ class CommentController extends BaseCRUD
         if (!$this->canComment($data['post_id'], (bool) $coins)) {
             return $this->response(403, [], 'Você não pode comentar nesse post');
         }
-        
+
         // Verifico se o usuário tem saldo para comentar
         if (!$this->canHighlight($coins)) {
             return $this->response(403, [], 'Você não tem saldo suficiente');
