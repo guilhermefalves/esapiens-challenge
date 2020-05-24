@@ -11,6 +11,8 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
+$router->group(['prefix' => 'comment'], function() use ($router) {
+    // TODO: authenticated routes
+    $router->post('/', 'CommentController@store');
+
 });

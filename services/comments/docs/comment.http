@@ -1,0 +1,15 @@
+@baseURL=http://localhost:4003
+@jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjp7ImlkIjoyLCJuYW1lIjoiR3VpbGhlcm1lIiwiZW1haWwiOiJiQGEuY29tIiwic3Vic2NyaWJlciI6ZmFsc2UsImRlbGV0ZWRfYXQiOm51bGwsImNyZWF0ZWRfYXQiOiIyMDIwLTA1LTIzVDIyOjIxOjU4LjAwMDAwMFoiLCJ1cGRhdGVkX2F0IjoiMjAyMC0wNS0yM1QyMjoyMTo1OC4wMDAwMDBaIn0sImlhdCI6MTU5MDI4MDQxMywiZXhwIjoxNTkwMzY2ODEzfQ.3GwiUECms3rOkc_x31t-ELcQlpByTDbAlLbwSXPHKU4
+
+POST {{baseURL}}/comment
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+Accept: application/json
+
+{
+    "post_id": 10,
+    "title": "Um comentário qualquer",
+    "content": "Bla bla bla"
+}
+
+POST http://localhost:4001/is/subscriber/2
