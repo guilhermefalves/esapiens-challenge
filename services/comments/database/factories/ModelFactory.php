@@ -29,11 +29,15 @@ $factory->define(Post::class, function (Faker $faker) {
 });
 
 $factory->define(Comment::class, function (Faker $faker) {
+    $coins        = $faker->boolean ? $faker->numberBetween(10, 300) : 0;
+    $highlight_up = Carbon::now()->addMinutes($coins)->format('Y-m-d H:i:s');
+
     return [
         'user_id'      => $faker->numberBetween(1, 5),
-        'post_id'      => Post::inRandomOrder()->get('id')->first(),
+        'post_id'      => Post::inRandomOrder()->get('id')->first()->id,
         'title'        => $faker->sentence(8),
         'content'      => $faker->sentence(50),
-        'highlight_at' => $faker->dateTimeBetween(Carbon::now(), Carbon::now()->addWeek(1))
+        'coins'        => $coins,
+        'highlight_up' => $coins ? $highlight_up : null
     ];
 });

@@ -10,7 +10,7 @@ class PostTableSeeder extends Seeder
     {
         $numberOfPosts = 10;
         for ($i = 0; $i < $numberOfPosts; $i++) {
-            $post = factory(Post::class)->make()->toArray();
+            $post = factory(Post::class)->make()->makeVisible('content')->toArray();
             Post::create($post);
         }
     }

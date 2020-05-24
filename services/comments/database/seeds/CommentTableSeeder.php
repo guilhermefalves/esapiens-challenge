@@ -9,7 +9,7 @@ class CommentTableSeeder extends Seeder
     {
         $numberOfPosts = 25;
         for ($i = 0; $i < $numberOfPosts; $i++) {
-            $comment = factory(Comment::class)->make()->toArray();
+            $comment = factory(Comment::class)->make()->makeVisible(['post_id'])->toArray();
             Comment::create($comment);
         }
     }

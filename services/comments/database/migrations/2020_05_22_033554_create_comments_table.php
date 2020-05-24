@@ -19,7 +19,8 @@ class CreateCommentsTable extends Migration
             $table->unsignedBigInteger('post_id');
             $table->string('title', 100);
             $table->text('content');
-            $table->timestamp('highlight_at')->nullable()->default(null);
+            $table->integer('coins')->nullable();
+            $table->timestamp('highlight_up')->nullable()->default(null);
             $table->timestamps();
             $table->softDeletes();
 
