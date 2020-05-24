@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Model;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
 use LumenBaseCRUD\Controller as BaseCRUD;
 use Firebase\JWT\JWT;
-use App\Libraries\UserService;
+use App\Libraries\{NotificationService, TransactionService, UserService};
+use Illuminate\Support\Carbon;
 
 /**
  * Controller das transactions
@@ -33,6 +35,7 @@ class CommentController extends BaseCRUD
 
     protected array $postRules = [
         'post_id' => 'exists:posts,id',
+        'coins'   => 'integer',
         'title'   => 'string|max:100|required',
         'content' => 'string|required'
     ];
@@ -42,12 +45,83 @@ class CommentController extends BaseCRUD
         // Adiciono o id do usuário logado
         $data['user_id'] = $this->user->id;
 
+        // Qauntas moedas estão sendo utilizadas no destaque
+        $coins = (isset($data['coins'])) ? $data['coins'] : 0;
+
         // Começo verificando se o usuário pode comentar
-        if (!$this->canComment($data['post_id'], false)) {
+        if (!$this->canComment($data['post_id'], (bool) $coins)) {
             return $this->response(403, [], 'Você não pode comentar nesse post');
+        }
+        
+        // Verifico se o usuário tem saldo para comentar
+        if (!$this->canHighlight($coins)) {
+            return $this->response(403, [], 'Você não tem saldo suficiente');
+        }
+
+        // Adiciona as coins usadas e até quando será o destaque
+        $now   = Carbon::now();
+        $data['coins']        = $coins;
+        $data['created_at']   = $now->format('Y-m-d H:i:s');
+        $data['highlight_up'] = $coins ? $now->addMinutes($coins)->format('Y-m-d H:i:s') : null;
+    }
+
+    /**
+     * Executada após a criação de um comentário
+     * É responsável por criar a transação (se houver destaque) e a notificação
+     *
+     * @param Model $comment
+     * @return void
+     */
+    protected function posStore(Model $comment)
+    {
+        $usingCoins = (bool) $comment->coins;
+
+        // Se estiver dando destaque a notificação, vou criar sua transaction
+        if ($usingCoins) {
+            // Recupero a URL e o Secret
+            $url    = config('services.transaction.host');
+            $secret = config('services.transaction.secret');
+
+            // E crio a transaction
+            $transactionService = new TransactionService($url, $secret, $this->user);
+            $transactionID = $transactionService->create($comment->id, $comment->coins);
+        }
+
+        if ($usingCoins && !$transactionID) {
+            $comment->forceDelete();
+            return $this->response(500, [], 'Problemas ao dar destaque nesse comentário');
+        }
+
+        $url    = config('services.notification.host');
+        $secret = config('services.notification.secret');
+        $ntfService     = new NotificationService($url, $secret, $this->user);
+        $notificationID = $ntfService->create();
+        if (!$notificationID) {
+            $comment->forceDelete();
+            return $this->response(500, [], 'Problemas ao criar notificações para o comentário');
+        }
+
+        // Comment, Transaction e Notification criados, vou confirmar a Transaction
+        if ($usingCoins) {
+            $transactionConfirmed = $transactionService->confirm($transactionID);
+        }
+
+        // Se estiver dando destaque ao comentário e a trancaction não for confirmada
+        if ($usingCoins && !$transactionConfirmed) {
+            // preciso deletar o Comment e a Notification
+            $comment->forceDelete();
+            $ntfService->delete($notificationID);
+            return $this->response(500, [], 'Problemas confirmar o destaque para o comentário');
         }
     }
 
+    /**
+     * Verifica se um usuário pode comentar em uma publicação
+     *
+     * @param integer $postID
+     * @param integer $usingCoins
+     * @return boolean
+     */
     private function canComment(int $postID, int $usingCoins): bool
     {
         // TODO: verificar qtos comentários o usuário fez nos últimos minutos
@@ -73,5 +147,21 @@ class CommentController extends BaseCRUD
 
         // Posts de assinantes podem receber comentário de qualquer usuário
         return $isPostOfSubscriber;
+    }
+
+    /**
+     * Verifica se um usuário tem saldo para dar destaque a um comentário
+     *
+     * @param integer $coins
+     * @return boolean
+     */
+    private function canHighlight(int $coins)
+    {
+        $url    = config('services.transaction.host');
+        $secret = config('services.transaction.secret');
+        $transactionService = new TransactionService($url, $secret, $this->user);
+
+        $userBalance = $transactionService->getBalance($coins);
+        return $userBalance >= $coins;
     }
 }

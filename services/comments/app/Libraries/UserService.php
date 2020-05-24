@@ -9,21 +9,7 @@ namespace App\Libraries;
  */
 class UserService
 {
-    use MakeRequestTrait;
-
-    /**
-     * URL do service
-     * 
-     * @var string
-     */
-    private string $url;
-
-    /**
-     * JWT Secret Key do service
-     * 
-     * @var string
-     */
-    private string $secret;
+    use ServiceTrait;
 
     public function __construct(string $serviceURL, string $jwtSecret)
     {
@@ -39,7 +25,7 @@ class UserService
      */
     public function isSubscriber(int $userID): bool
     {
-        $endpoint = '/is/subscriber/' . $userID;
+        $endpoint = $this->url . '/is/subscriber/' . $userID;
         $response = $this->request($endpoint, $this->secret);
 
         return $response["subscriber"] ?? false;

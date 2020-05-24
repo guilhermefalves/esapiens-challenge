@@ -7,9 +7,8 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "post_id": 10,
+    "post_id": 9,
     "title": "Um comentário qualquer",
-    "content": "Bla bla bla"
+    "content": "Bla bla bla",
+    "coins": 10
 }
-
-POST http://localhost:4001/is/subscriber/2

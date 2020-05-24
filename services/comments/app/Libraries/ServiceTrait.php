@@ -14,8 +14,36 @@ use Illuminate\Support\Carbon;
  * 
  * @author Guilherme Alves <guihalves20@gmail.com>
  */
-trait MakeRequestTrait
+trait ServiceTrait
 {
+    /**
+     * URL do service
+     * 
+     * @var string
+     */
+    private string $url;
+
+    /**
+     * JWT Secret Key do service
+     * 
+     * @var string
+     */
+    private string $secret;
+
+    /**
+     * Armazena o usuário que fez login (payload do JWT)
+     *
+     * @var Object
+     */
+    private Object $user;
+
+    public function __construct(string $serviceURL, string $jwtSecret, Object $user)
+    {
+        $this->url    = $serviceURL;
+        $this->secret = $jwtSecret;
+        $this->user   = $user;
+    }
+
     /**
      * Realiza uma requisição ao service
      *
@@ -64,6 +92,10 @@ trait MakeRequestTrait
             'iat' => $now->unix(),
             'exp' => $now->add(config('jwt.expireAfter'))->unix(),
         ];
+
+        if ($this->user) {
+            $payload['user'] = $this->user;
+        }
 
         return JWT::encode($payload, $secretKey);
     }
