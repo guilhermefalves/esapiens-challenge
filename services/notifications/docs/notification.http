@@ -1,0 +1,32 @@
+@baseURL=http://localhost:4005
+@jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjp7ImlkIjoyLCJuYW1lIjoiR3VpbGhlcm1lIiwiZW1haWwiOiJiQGEuY29tIiwic3Vic2NyaWJlciI6ZmFsc2UsImRlbGV0ZWRfYXQiOm51bGwsImNyZWF0ZWRfYXQiOiIyMDIwLTA1LTIzVDIyOjIxOjU4LjAwMDAwMFoiLCJ1cGRhdGVkX2F0IjoiMjAyMC0wNS0yM1QyMjoyMTo1OC4wMDAwMDBaIn0sImlhdCI6MTU5MDMyOTUzOCwiZXhwIjoxNTkwNDE1OTM4fQ.Bm6LHWdqNUfwTz9aEwgCOzgUDB_4nCKuKmHG5OUdRTQ
+
+POST {{baseURL}}/notification
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+Accept: application/json
+
+{
+    "to": 1,
+    "mail_to": "a@a.com",
+    "content": "O usuário Nome Do Usuario comentou \"primeiros caracters do comentario\" no Post \"Titulo post\"",
+    "identifier": 5
+}
+
+// Recupera as novas notificações do usuario
+GET {{baseURL}}/notification/78
+Authorization: Bearer {{jwt}}
+Accept: application/json
+
+GET {{baseURL}}/notification
+Authorization: Bearer {{jwt}}
+Accept: application/json
+
+GET {{baseURL}}/notification/new
+Authorization: Bearer {{jwt}}
+Accept: application/json
+
+// Recupera todas as notificações do usuario
+GET {{baseURL}}/notification/all
+Authorization: Bearer {{jwt}}
+Accept: application/json
