@@ -99,10 +99,7 @@ class CommentController extends BaseCRUD
             return $this->response(500, [], 'Problemas ao dar destaque nesse comentário');
         }
 
-        $url    = config('services.notification.host');
-        $secret = config('services.notification.secret');
-        $ntfService     = new NotificationService($url, $secret, $this->user);
-        $notificationID = $ntfService->create();
+        $notificationID = $this->createNotification($comment);
         if (!$notificationID) {
             $comment->forceDelete();
             return $this->response(500, [], 'Problemas ao criar notificações para o comentário');
@@ -117,8 +114,8 @@ class CommentController extends BaseCRUD
         if ($usingCoins && !$transactionConfirmed) {
             // preciso deletar o Comment e a Notification
             $comment->forceDelete();
-            $ntfService->delete($notificationID);
-            return $this->response(500, [], 'Problemas confirmar o destaque para o comentário');
+            $this->deleteNotification($notificationID);
+            return $this->response(500, [], 'Problemas ao confirmar o destaque para o comentário');
         }
     }
 
@@ -189,6 +186,46 @@ class CommentController extends BaseCRUD
         }
 
         return $this->response(200);
+    }
+
+    /**
+     * Cria uma notificação e retorna seu ID
+     *
+     * @param Comment $comment
+     * @return integer
+     */
+    private function createNotification(Comment $comment): int
+    {
+        $url    = config('services.user.host');
+        $secret = config('services.user.secret');
+        $userService = new UserService($url, $secret);
+
+        $url    = config('services.notification.host');
+        $secret = config('services.notification.secret');
+        $ntfService = new NotificationService($url, $secret, $this->user);
+
+        $receiver = $userService->get($comment->post->user_id);
+        $message  = sprintf(
+            'O usuário %s comentou "%s" na Publicação "%s"',
+            $receiver->name,
+            $comment->content,
+            $comment->post->title
+        );
+        return $ntfService->create($receiver->id, $receiver->email, $message);
+    }
+
+    /**
+     * Deleta uma notificação no Serviço de notificações
+     *
+     * @param integer $notificationID
+     * @return boolean
+     */
+    private function deleteNotification(int $notificationID): bool
+    {
+        $url    = config('services.notification.host');
+        $secret = config('services.notification.secret');
+        $ntfService = new NotificationService($url, $secret, $this->user);
+        return $ntfService->delete($notificationID);
     }
 
     /**

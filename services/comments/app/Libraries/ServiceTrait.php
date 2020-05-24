@@ -51,7 +51,7 @@ trait ServiceTrait
      * @param array $data
      * @param string $method
      * @param boolean $returnStatusCode
-     * @return void
+     * @return array|integer
      */
     public function request(
         string $endpoint,
@@ -97,7 +97,7 @@ trait ServiceTrait
      * @param string $endpoint
      * @param array $data
      * @param string $method
-     * @return void
+     * @return integer
      */
     public function requestStatus(
         string $endpoint,

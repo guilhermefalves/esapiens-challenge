@@ -16,10 +16,28 @@ class NotificationService
      *
      * @return integer
      */
-    public function create(): int
+    public function create(
+        int $receiverID,
+        string $receiverEmail,
+        string $message,
+        int $identifier = 0
+    ): int
     {
-        // TODO: call POST /notification
-        return 1;
+        // Crio um array com os dados da notificação
+        $notification = [
+            'to'         => $receiverID,
+            'mail_to'    => $receiverEmail,
+            'content'    => $message
+        ];
+
+        // Se passado, adiciono o identifier
+        if ($identifier) {
+            $notification['identifier'] = $identifier; 
+        }
+
+        // Salvo-a e retorno seu ID
+        $response = $this->request('/notification', $notification);
+        return (isset($response['id'])) ? $response['id'] : 0;
     }
 
     /**
@@ -29,7 +47,7 @@ class NotificationService
      */
     public function delete(int $id): bool
     {
-        // TODO: call POST /notification/$id
-        return true;
+        $statusCode = $this->requestStatus('/notification/' . $id, [], 'DELETE');
+        return $statusCode == 200;
     }
 }
