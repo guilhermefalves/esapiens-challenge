@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use LumenBaseCRUD\Controller as BaseCRUD;
 use Firebase\JWT\JWT;
 use App\Libraries\{NotificationService, TransactionService, UserService};
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
 
 /**
@@ -113,6 +114,75 @@ class CommentController extends BaseCRUD
             $ntfService->delete($notificationID);
             return $this->response(500, [], 'Problemas confirmar o destaque para o comentário');
         }
+    }
+
+    /**
+     * Executada antes da deleção de um comentário
+     * Responsável por verificar se o usuário pode realiza-la
+     *
+     * @param Model $object
+     * @return void|JsonResponse
+     */
+    protected function preDelete(Model &$comment)
+    {
+        // Se o usuário for dono do comentário, pode deleta-lo
+        if ($this->user->id == $comment->user_id ) {
+            return;
+        }
+
+        // Se o usuario for o dono do post, pode deletar o comentário
+        if ($this->user->id == $comment->post->user_id) {
+            return;
+        }
+
+        // Se o usuário não for dono do comentário nem da publicação, não pode
+        return $this->response(403, [], 'Você não tem permissão para deletar este comentário');
+    }
+
+    /**
+     * Função para deletar TODOS os comentários de um post
+     *
+     * @param integer $postID
+     * @return JsonResponse
+     */
+    public function deleteByPost(int $postID): JsonResponse
+    {
+        $post = Post::find($postID);
+
+        // Se o post não for do usuário, ele não pode deletar seus comentários
+        if ($post->user_id != $this->user->id) {
+            return $this->response(403, [], 'Você não pode deletar os comentários deste post');
+        }
+
+        $deleted = Comment::where('post_id', $post->id)->delete();
+        if (!$deleted) {
+            return $this->response(500, [], 'Problemas ao deletar os comentários deste post');
+        }
+
+        return $this->response(200);
+    }
+
+    /**
+     * Função para deletar TODOS os comentários de um usuário em um post
+     *
+     * @param integer $postID
+     * @return JsonResponse
+     */
+    public function deleteByPostAndUser(int $postID, int $userID): JsonResponse
+    {
+        $post = Post::find($postID);
+
+        // Se o post não for do usuário, ele não pode deletar seus comentários
+        if ($post->user_id != $this->user->id) {
+            return $this->response(403, [], 'Você não pode deletar os comentários deste post');
+        }
+
+        $deleted = Comment::where('post_id', $postID)->where('user_id', $userID)->delete();
+        if (!$deleted) {
+            return $this->response(500, [], 'Problemas ao deletar os comentários deste post');
+        }
+
+        return $this->response(200);
     }
 
     /**

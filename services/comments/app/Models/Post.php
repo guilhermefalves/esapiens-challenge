@@ -14,4 +14,9 @@ class Post extends Model
     ];
 
     protected $hidden = ['content'];
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

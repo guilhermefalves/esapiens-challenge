@@ -15,5 +15,8 @@ class Comment extends Model
 
     protected $hidden = ['post_id'];
 
-    protected $with = ['post'];
+    public function post()
+    {
+        return $this->belongsTo(Post::class);
+    }
 }

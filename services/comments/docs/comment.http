@@ -12,3 +12,15 @@ Accept: application/json
     "content": "Bla bla bla",
     "coins": 10
 }
+
+DELETE {{baseURL}}/comment/39
+Authorization: Bearer {{jwt}}
+Accept: application/json
+
+DELETE {{baseURL}}/comment/post/8
+Authorization: Bearer {{jwt}}
+Accept: application/json
+
+DELETE {{baseURL}}/comment/5/1
+Authorization: Bearer {{jwt}}
+Accept: application/json

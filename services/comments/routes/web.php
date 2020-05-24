@@ -14,5 +14,8 @@
 $router->group(['prefix' => 'comment'], function() use ($router) {
     // TODO: authenticated routes
     $router->post('/', 'CommentController@store');
+    $router->delete('/{id:[0-9]+}', 'CommentController@delete');
+    $router->delete('/post/{postID:[0-9]+}', 'CommentController@deleteByPost');
+    $router->delete('/{postID:[0-9]+}/{userID:[0-9]+}', 'CommentController@deleteByPostAndUser');
 
 });
