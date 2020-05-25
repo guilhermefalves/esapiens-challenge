@@ -9,9 +9,8 @@ class TransactionsTableSeeder extends Seeder
     {
         for ($i = 0; $i < 10; $i++) {
             $transaction = factory(Transaction::class)
-            ->make()
-            ->makeVisible(['user_id', 'comment_id', 'coins', 'type', 'transaction_id'])
-            ->toArray();
+                ->make()
+                ->toArray();
             Transaction::create($transaction);
         }
     }

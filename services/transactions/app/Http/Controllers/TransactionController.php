@@ -90,9 +90,8 @@ class TransactionController extends Controller
 
         $userBalance = $this->getUserBalance($user->id);
 
-        // Retorna o saldo do usuário já descontando (ou não) as taxas
-        $withoutTax  = (bool) $request->get('withouttax');
-        $systemTax   = $withoutTax ? 1 : 1 - config('app.systemTax');
+        // Retorna o saldo do usuário já descontando as taxas
+        $systemTax   = 1 - config('app.systemTax');
         $userBalance = $userBalance * $systemTax;
         
         return $this->response(200, compact('userBalance'));

@@ -14,8 +14,6 @@
 $router->group(['prefix' => 'transaction'], function() use ($router) {
     // TODO: authenticated routes
     $router->post('/', 'TransactionController@store');
-    $router->delete('/{id:[0-9]+}', 'TransactionController@delete');
-
     $router->post('/confirm/{id:[0-9]+}', 'TransactionController@confirm');
 });
 

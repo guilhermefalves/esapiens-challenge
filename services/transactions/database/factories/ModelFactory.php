@@ -19,12 +19,11 @@ use Illuminate\Support\Arr;
 
 $factory->define(Transaction::class, function (Faker $faker) {
     $type = Arr::random(['in', 'out'], 1)[0];
-    $systemTransaction = $faker->boolean();
+    $systemTransaction = ($type == 'in') ? false : $faker->boolean();
     $transactionID = ($systemTransaction)
         ? Transaction::inRandomOrder()->where('system_transaction', false)->get('id')->first()
         : null;
-    $coins = $faker->randomFloat(2, 0, 999.99);
-
+    $coins = $faker->randomNumber(3);
     return [
         'user_id'        => $faker->numberBetween(1, 5),
         'comment_id'     => $faker->numberBetween(1, 20),
@@ -34,6 +33,6 @@ $factory->define(Transaction::class, function (Faker $faker) {
         'type'  => $type,
         'tax'   => config('app.systemTax'),
 
-        'system_transaction' => $faker->boolean(),
+        'system_transaction' => $systemTransaction
     ];
 });
