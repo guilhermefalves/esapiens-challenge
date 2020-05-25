@@ -10,11 +10,12 @@ use LumenBaseCRUD\Controller as BaseCRUD;
 use Firebase\JWT\JWT;
 use App\Libraries\{NotificationService, TransactionService, UserService};
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Redis;
 
 /**
- * Controller das transactions
+ * Controller dos comentários
  * 
  * @author Guilherme Alves <guihalves20@gmail.com>
  */
@@ -152,6 +153,55 @@ class CommentController extends BaseCRUD
 
         // Se o usuário não for dono do comentário nem da publicação, não pode
         return $this->response(403, [], 'Você não tem permissão para deletar este comentário');
+    }
+
+    /**
+     * Retorna todas as publicações de um Post
+     *
+     * @param integer $userID
+     * @return JsonResponse
+     */
+    public function indexByPost(int $postID): JsonResponse
+    {
+        // A ideia da ordenação é usar 
+        $comments = Comment::where('post_id', $postID)
+            ->orderByRaw('IFNULL(highlight_up >= NOW(), 0) * coins DESC')
+            ->orderBy('created_at', 'DESC')
+            ->paginate(config('database.pageSize'))
+            ->toArray();
+
+        return $this->returnComments($comments);
+    }
+
+    /**
+     * Retorna todas as publicações de um User
+     *
+     * @param integer $userID
+     * @return JsonResponse
+     */
+    public function indexByUser(int $userID): JsonResponse
+    {
+        $comments = Comment::where('user_id', $userID)
+            ->orderByRaw('IFNULL(highlight_up >= NOW(), 0) * coins DESC')
+            ->orderBy('created_at', 'DESC')
+            ->paginate(config('database.pageSize'))
+            ->toArray();
+
+        return $this->returnComments($comments);
+    }
+
+    /**
+     * A partir de um array de commentários, retorna seu JSON
+     *
+     * @param array $commentsPaginated
+     * @return JsonResponse
+     */
+    private function returnComments(array $commentsPaginated): JsonResponse
+    {
+        $data       = $commentsPaginated['data'];
+        $pagination = Arr::except($commentsPaginated, 'data');
+
+        return $this->response(200, compact(['data', 'pagination']));
     }
 
     /**

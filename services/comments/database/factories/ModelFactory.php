@@ -38,6 +38,8 @@ $factory->define(Comment::class, function (Faker $faker) {
         'title'        => $faker->sentence(8),
         'content'      => $faker->sentence(50),
         'coins'        => $coins,
+        'created_at'   => $faker->dateTimeThisMonth(),
+        'updated_at'   => $faker->dateTimeThisMonth(),
         'highlight_up' => $coins ? $highlight_up : null
     ];
 });

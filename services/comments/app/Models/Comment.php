@@ -13,7 +13,7 @@ class Comment extends Model
         'user_id', 'post_id', 'title', 'content', 'coins', 'highlight_up', 'created_at'
     ];
 
-    protected $hidden = ['post_id'];
+    protected $hidden = ['deleted_at'];
 
     public function post()
     {
