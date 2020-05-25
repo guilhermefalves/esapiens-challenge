@@ -15,6 +15,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Notification Delaty to mail
+    |--------------------------------------------------------------------------
+    |
+    | This value is used like a delay to send the email notification in seconds
+    |
+    */
+    'notificationMailDelay' => env('NOTIFICATION_DELAY_TO_MAIL', 60),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Name
     |--------------------------------------------------------------------------
     |

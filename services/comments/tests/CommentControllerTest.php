@@ -2,21 +2,25 @@
 
 namespace Tests;
 
-use App\Models\Comment;
-use App\Models\Post;
+use Laravel\Lumen\Testing\DatabaseMigrations;
 
 class CommentControllerTest extends TestCase
 {
-    public function testAB()
-    {
-        $post = factory(Post::class)->make()->toArray();
-        $comment = factory(Comment::class)->make()->toArray();
+    use DatabaseMigrations;
 
-        print_r($post);
-        echo "\n\n\n\n\n\n";
-        print_r($comment);
+    // testCreateUserSubscriber
+    // testCreatePostSubscriber
+    // testCreateWithCoins
+    // testFail
+    // testFailTTL
 
-        $this->assertTrue(true);
-    }
+    // testDeleteOwner => success
+    // testDeletePostOwner => success
+    // testDeleteNotOwnerAndNotPostOwner -> fail
 
+    // testDeleteByPost
+    // testDeleteByPostNotOwner
+
+    // testDeleteByPostAndUser
+    // testDeleteByPostAndUserNotOwner
 }

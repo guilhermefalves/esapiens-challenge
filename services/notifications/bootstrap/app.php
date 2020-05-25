@@ -60,7 +60,14 @@ $app->singleton(
 
 $app->configure('app');
 $app->configure('jwt');
+$app->configure('queue');
+$app->configure('mail');
 $app->configure('database');
+
+
+$app->alias('mailer', Illuminate\Mail\Mailer::class);
+$app->alias('mailer', Illuminate\Contracts\Mail\Mailer::class);
+$app->alias('mailer', Illuminate\Contracts\Mail\MailQueue::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -92,6 +99,7 @@ $app->configure('database');
 |
 */
 
+$app->register(Illuminate\Mail\MailServiceProvider::class);
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);

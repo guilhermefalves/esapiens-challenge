@@ -1,3 +1,8 @@
+# Challenge - Notifications
+
+# E-mails
+É possível configurar um cliente smtp para o envio. Em ambiente de testes também é possível, no arquivo de congs (.env) setar MAIL_MAILER=log para que os e-mails sejam "enviados" para os logs
+
 # Lumen PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)

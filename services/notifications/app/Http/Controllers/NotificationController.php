@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendEmail;
 use App\Models\Notification;
 use Illuminate\Database\Eloquent\Model;
 use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\{ Arr, Carbon};
+use Illuminate\Support\Facades\Queue;
 use LumenBaseCRUD\Controller as BaseCRUD;
 
 /**
@@ -39,7 +41,7 @@ class NotificationController extends BaseCRUD
     }
 
     /**
-     * Executada após a criação de uma notificação
+     * Executada antes a criação de uma notificação
      * Responsável por adicionar dados adicionais a notificação
      *
      * @param Model $notification
@@ -49,6 +51,20 @@ class NotificationController extends BaseCRUD
     {
         // Adiciono os dados do usuário que gerou a notificação
         $data['from'] = $this->user->id;
+    }
+
+    /**
+     * Executada após a criação de uma notificação
+     * Responsável por colocar o envio do e-mail em uma fila com um delay. O 
+     * delay dá tempo para que a notificação possa ser cancelada em caso de erro
+     *
+     * @param Model $notification
+     * @return void
+     */
+    protected function posStore(Model $notification)
+    {
+        $delayToSend = config('app.notificationMailDelay');
+        Queue::later($delayToSend, new SendEmail($notification));
     }
 
     /**
