@@ -1,7 +1,7 @@
 @baseURL=http://localhost:4001
 
 # Cria um usuário
-POST {{baseURL}}/user
+POST {{baseURL}}/users
 Content-Type: application/json
 Accept: application/json
 
@@ -14,12 +14,12 @@ Accept: application/json
 
 @userID=1
 # Retorna os dados de um usuário
-GET {{baseURL}}/user/{{userID}}
+GET {{baseURL}}/users/{{userID}}
 Accept: application/json
 
 @userID=1
 # Atualiza um usuário
-PUT {{baseURL}}/user/{{userID}}
+PUT {{baseURL}}/users/{{userID}}
 Content-Type: application/json
 Accept: application/json
 
@@ -29,7 +29,7 @@ Accept: application/json
 
 # Deleta um usuário
 @userID=2
-DELETE {{baseURL}}/user/{{userID}}
+DELETE {{baseURL}}/users/{{userID}}
 Accept: application/json
 
 # Loga um usuário no sistema

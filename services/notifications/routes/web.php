@@ -11,14 +11,13 @@
 |
 */
 
-$router->group(['prefix' => 'notification'], function() use ($router) {
+$router->group(['prefix' => 'notifications'], function() use ($router) {
     // TODO: authenticated routes
-    $router->post('/', 'NotificationController@store');
-
     $router->get('/', 'NotificationController@index');
     $router->get('/new', 'NotificationController@indexNew');
     $router->get('/all', 'NotificationController@indexAll');
     $router->get('/{id:[0-9]+}', 'NotificationController@show');
+    $router->post('/', 'NotificationController@store');
 });
 
 // $router->group(['prefix' => 'has'], function() use ($router) {

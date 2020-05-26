@@ -40,7 +40,7 @@ class UserService
      */
     public function get(int $id): object
     {
-        $response = $this->request('/user/' . $id, [], 'GET');
+        $response = $this->request('/users/' . $id, [], 'GET');
         $response = (isset($response['data'])) ? $response['data'] : [];
         return (object) $response;
     }

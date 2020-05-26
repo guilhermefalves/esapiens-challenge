@@ -23,7 +23,7 @@ class TransactionService
      */
     public function getBalance(): float
     {
-        $response = $this->request('/balance');
+        $response = $this->request('/transactions/balance');
         return $response['userBalance'];
     }
 
@@ -41,7 +41,7 @@ class TransactionService
             'coins' => $coins,
             'type' => 'out'
         ];
-        $response = $this->request('/transaction', $transaction);
+        $response = $this->request('/transactions', $transaction);
         return $response['id'];
     }
 
@@ -53,6 +53,6 @@ class TransactionService
      */
     public function confirm(int $id): bool
     {
-        return $this->requestStatus('/transaction/confirm/' . $id) == 200;
+        return $this->requestStatus('/transactions/confirm/' . $id) == 200;
     }
 }

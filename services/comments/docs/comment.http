@@ -1,8 +1,8 @@
-@baseURL=http://localhost:4003
+@baseURL=http://localhost:4003/comments
 @jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjp7ImlkIjoyLCJuYW1lIjoiR3VpbGhlcm1lIiwiZW1haWwiOiJiQGEuY29tIiwic3Vic2NyaWJlciI6ZmFsc2UsImRlbGV0ZWRfYXQiOm51bGwsImNyZWF0ZWRfYXQiOiIyMDIwLTA1LTIzVDIyOjIxOjU4LjAwMDAwMFoiLCJ1cGRhdGVkX2F0IjoiMjAyMC0wNS0yM1QyMjoyMTo1OC4wMDAwMDBaIn0sImlhdCI6MTU5MDM4MDc1MywiZXhwIjoxNTkwNDY3MTUzfQ.QG-6iqEMOyiXvYCex0-ga-fxENc003TpJGbREtNEN6s
 
 # Cria um comentário
-POST {{baseURL}}/comment
+POST {{baseURL}}
 Authorization: Bearer {{jwt}}
 Content-Type: application/json
 Accept: application/json
@@ -16,31 +16,31 @@ Accept: application/json
 
 # Busca os comments por POST
 @postID=9
-GET {{baseURL}}/comment/post/{{postID}}
+GET {{baseURL}}/post/{{postID}}
 Authorization: Bearer {{jwt}}
 Accept: application/json
 
 # Busca os comments por User
 @userID=2
-GET {{baseURL}}/comment/user/{{userID}}
+GET {{baseURL}}/user/{{userID}}
 Authorization: Bearer {{jwt}}
 Accept: application/json
 
 # Deleta um comentário
 @commentID=39
-DELETE {{baseURL}}/comment/{{commentID}}
+DELETE {{baseURL}}/{{commentID}}
 Authorization: Bearer {{jwt}}
 Accept: application/json
 
 # Deleta todos os comentários de um post
 @postID=8
-DELETE {{baseURL}}/comment/post/{{postID}}
+DELETE {{baseURL}}/post/{{postID}}
 Authorization: Bearer {{jwt}}
 Accept: application/json
 
 # Deleta todos os comentários feitos por um usuário em um post
 @postID=5
 @userID=1
-DELETE {{baseURL}}/comment/{{postID}}/{{userID}}
+DELETE {{baseURL}}/{{postID}}/{{userID}}
 Authorization: Bearer {{jwt}}
 Accept: application/json

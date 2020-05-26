@@ -52,7 +52,7 @@ class NotificationControllerTest extends TestCase
             ->makeHidden(['from', 'sended', 'sended_at', 'readed', 'readed_at'])
             ->toArray();
 
-        $this->post('/notification', $notification, $this->headersSender)->seeJsonStructure([
+        $this->post('/notifications', $notification, $this->headersSender)->seeJsonStructure([
             'status', 'message', 'id'
         ]);
         $this->response->assertStatus(201);
@@ -67,7 +67,7 @@ class NotificationControllerTest extends TestCase
     public function testIndex(Notification $notification)
     {
         $ntfID = $notification->id;
-        $this->get('/notification', $this->headersReceiver)->seeJsonStructure([
+        $this->get('/notifications', $this->headersReceiver)->seeJsonStructure([
             'status', 'message', 'data', 'pagination'
         ]);
 
@@ -88,7 +88,7 @@ class NotificationControllerTest extends TestCase
     public function testIndexNotReceiver(Notification $notification)
     {
         $ntfID = $notification->id;
-        $this->get('/notification', $this->headersSender)->seeJsonStructure([
+        $this->get('/notifications', $this->headersSender)->seeJsonStructure([
             'status', 'message', 'data', 'pagination'
         ]);
 
@@ -112,7 +112,7 @@ class NotificationControllerTest extends TestCase
         Notification::where('id', $notification->id)
             ->update(['created_at' => '2010-05-25 20:30:00']);
 
-        $this->get('/notification', $this->headersReceiver)->seeJsonStructure([
+        $this->get('/notifications', $this->headersReceiver)->seeJsonStructure([
             'status', 'message', 'data', 'pagination'
         ]);
 
@@ -134,7 +134,7 @@ class NotificationControllerTest extends TestCase
     public function testIndexAll(Notification $notification)
     {
         $ntfID = $notification->id;
-        $this->get('/notification', $this->headersReceiver)->seeJsonStructure([
+        $this->get('/notifications', $this->headersReceiver)->seeJsonStructure([
             'status', 'message', 'data', 'pagination'
         ]);
 
@@ -152,7 +152,7 @@ class NotificationControllerTest extends TestCase
      */
     public function testIndexNew(Notification $notification)
     {
-        $this->get('/notification/new', $this->headersReceiver)->seeJsonStructure([
+        $this->get('/notifications/new', $this->headersReceiver)->seeJsonStructure([
             'status', 'message', 'data', 'hasMore', 'total', 'perPage'
         ]);
 
@@ -179,7 +179,7 @@ class NotificationControllerTest extends TestCase
      */
     public function testIndexNewAfterRead()
     {
-        $this->get('/notification/new', $this->headersReceiver)->seeJsonStructure([
+        $this->get('/notifications/new', $this->headersReceiver)->seeJsonStructure([
             'status', 'message', 'data', 'hasMore', 'total', 'perPage'
         ]);
 

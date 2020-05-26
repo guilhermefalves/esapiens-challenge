@@ -36,7 +36,7 @@ class NotificationService
         }
 
         // Salvo-a e retorno seu ID
-        $response = $this->request('/notification', $notification);
+        $response = $this->request('/notifications', $notification);
         return (isset($response['id'])) ? $response['id'] : 0;
     }
 
@@ -47,7 +47,7 @@ class NotificationService
      */
     public function delete(int $id): bool
     {
-        $statusCode = $this->requestStatus('/notification/' . $id, [], 'DELETE');
+        $statusCode = $this->requestStatus('/notifications/' . $id, [], 'DELETE');
         return $statusCode == 200;
     }
 }

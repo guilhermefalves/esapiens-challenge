@@ -15,7 +15,7 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->group(['prefix' => 'user'], function() use ($router) {
+$router->group(['prefix' => 'users'], function() use ($router) {
     // TODO: authenticated routes
     $router->post('/', 'UserController@store');
     $router->get('/', 'UserController@index');

@@ -15,7 +15,7 @@ class UserControllerTest extends TestCase
     public function testCreateSuccess(): array
     {
         $user = factory(User::class)->make()->makeVisible('password')->toArray();
-        $this->post('/user', $user)->seeJsonStructure([
+        $this->post('/users', $user)->seeJsonStructure([
             'message', 'status' , 'id'
         ]);
         $this->response->assertStatus(201);
@@ -32,7 +32,7 @@ class UserControllerTest extends TestCase
     public function testGet(array $user)
     {
         $id = $user['id'];
-        $this->get("/user/$id")->seeJsonStructure([
+        $this->get("/users/$id")->seeJsonStructure([
             'message', 'status'
         ]);
         
@@ -63,7 +63,7 @@ class UserControllerTest extends TestCase
     {
         $id = $user['id'];
         $user = factory(User::class)->make()->makeVisible('password')->toArray();
-        $this->put("/user/$id", $user)->seeJsonStructure([
+        $this->put("/users/$id", $user)->seeJsonStructure([
             'message', 'status'
         ]);
 
@@ -78,7 +78,7 @@ class UserControllerTest extends TestCase
     public function testDelete(array $user)
     {
         $id = $user['id'];
-        $this->delete("user/$id")->seeJsonStructure([
+        $this->delete("/users/$id")->seeJsonStructure([
             'status', 'message'
         ]);
 

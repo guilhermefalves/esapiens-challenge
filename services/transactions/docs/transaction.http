@@ -1,7 +1,8 @@
-@baseURL=http://localhost:4004
+@baseURL=http://localhost:4004/transactions
 @token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiR3VpbGhlcm1lIiwiZW1haWwiOiJhQGEuY29tIiwic3Vic2NyaWJlciI6ZmFsc2UsImRlbGV0ZWRfYXQiOm51bGwsImNyZWF0ZWRfYXQiOiIyMDIwLTA1LTIyVDAzOjM0OjUyLjAwMDAwMFoiLCJ1cGRhdGVkX2F0IjoiMjAyMC0wNS0yMlQwMzozNDo1Mi4wMDAwMDBaIn0sImlhdCI6MTU5MDI0ODQ3MiwiZXhwIjoxNTkwNjA4NDcyfQ.xuHBA9MQY0frsLqsq20UyGr_EVkADUFTE08YlpAPAOk
 
-POST {{baseURL}}/transaction
+# Cria uma transação de entrada, feita para recarregar o saldo
+POST {{baseURL}}
 Authorization: Bearer {{token}}
 Content-Type: application/json
 Accept: application/json
@@ -11,7 +12,8 @@ Accept: application/json
     "type": "in"
 }
 
-POST {{baseURL}}/transaction
+# Cria uma transação de saída, feita para utilizar os créditos
+POST {{baseURL}}
 Authorization: Bearer {{token}}
 Content-Type: application/json
 Accept: application/json
@@ -22,11 +24,12 @@ Accept: application/json
     "type": "out"
 }
 
-// Retorna o saldo do usuário já descontando as taxas do sistema
+# Retorna o saldo do usuário já descontando as taxas do sistema
 POST {{baseURL}}/balance
 Authorization: Bearer {{token}}
 Accept: application/json
 
-POST {{baseURL}}/transaction/confirm/6
+# Confirma uma transação
+POST {{baseURL}}/confirm/6
 Authorization: Bearer {{token}}
 Accept: application/json

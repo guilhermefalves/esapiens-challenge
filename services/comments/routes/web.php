@@ -11,7 +11,7 @@
 |
 */
 
-$router->group(['prefix' => 'comment'], function() use ($router) {
+$router->group(['prefix' => 'comments'], function() use ($router) {
     // TODO: authenticated routes
     $router->post('/', 'CommentController@store');
     $router->get('/post/{postID:[0-9]+}', 'CommentController@indexByPost');

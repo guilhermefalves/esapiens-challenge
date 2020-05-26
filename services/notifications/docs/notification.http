@@ -1,8 +1,8 @@
-@baseURL=http://localhost:4005
+@baseURL=http://localhost:4005/notifications
 @jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjp7ImlkIjoyLCJuYW1lIjoiR3VpbGhlcm1lIiwiZW1haWwiOiJiQGEuY29tIiwic3Vic2NyaWJlciI6ZmFsc2UsImRlbGV0ZWRfYXQiOm51bGwsImNyZWF0ZWRfYXQiOiIyMDIwLTA1LTIzVDIyOjIxOjU4LjAwMDAwMFoiLCJ1cGRhdGVkX2F0IjoiMjAyMC0wNS0yM1QyMjoyMTo1OC4wMDAwMDBaIn0sImlhdCI6MTU5MDQ0NDAzNSwiZXhwIjoxNTkwNTMwNDM1fQ.Sx8NzNX_enQCdyUlbwb676WFYmeEOpCNdc8BDojtYkI
 
 # Cria uma notificação
-POST {{baseURL}}/notification
+POST {{baseURL}}
 Authorization: Bearer {{jwt}}
 Content-Type: application/json
 Accept: application/json
@@ -14,22 +14,22 @@ Accept: application/json
     "identifier": 5
 }
 
-// Recupera uma única notificação
-GET {{baseURL}}/notification/78
+# Recupera uma única notificação
+GET {{baseURL}}/78
 Authorization: Bearer {{jwt}}
 Accept: application/json
 
-// Recupera as novas notificações do usuario
-GET {{baseURL}}/notification
+# Recupera as novas notificações do usuario
+GET {{baseURL}}
 Authorization: Bearer {{jwt}}
 Accept: application/json
 
-// Recupera todas as novas notificações do usuário
-GET {{baseURL}}/notification/new
+# Recupera todas as novas notificações do usuário
+GET {{baseURL}}/new
 Authorization: Bearer {{jwt}}
 Accept: application/json
 
-// Recupera todas as notificações do usuario
-GET {{baseURL}}/notification/all
+# Recupera todas as notificações do usuario
+GET {{baseURL}}/all
 Authorization: Bearer {{jwt}}
 Accept: application/json

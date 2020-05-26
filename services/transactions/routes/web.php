@@ -11,10 +11,9 @@
 |
 */
 
-$router->group(['prefix' => 'transaction'], function() use ($router) {
+$router->group(['prefix' => 'transactions'], function() use ($router) {
     // TODO: authenticated routes
     $router->post('/', 'TransactionController@store');
     $router->post('/confirm/{id:[0-9]+}', 'TransactionController@confirm');
+    $router->post('/balance', 'TransactionController@balance');
 });
-
-$router->post('/balance', 'TransactionController@balance');

@@ -48,7 +48,7 @@ class TransactionControllerTest extends TestCase
         ])->toArray();
         $transaction['coins'] = abs($transaction['coins']);
 
-        $this->post('/transaction', $transaction, $this->headers)->seeJsonStructure([
+        $this->post('/transactions', $transaction, $this->headers)->seeJsonStructure([
             'message', 'status', 'id'
         ]);
 
@@ -73,7 +73,7 @@ class TransactionControllerTest extends TestCase
             'system_transaction' => false,
         ])->toArray();
 
-        $this->post('/transaction', $transaction, $this->headers)->seeJsonStructure([
+        $this->post('/transactions', $transaction, $this->headers)->seeJsonStructure([
             'message', 'status', 'id'
         ]);
 
@@ -109,7 +109,7 @@ class TransactionControllerTest extends TestCase
         ])->toArray();
         $transaction['coins'] = abs($transaction['coins']);
 
-        $this->post('/transaction', $transaction, $this->headers)->seeJsonStructure([
+        $this->post('/transactions', $transaction, $this->headers)->seeJsonStructure([
             'message', 'status'
         ]);
 
@@ -122,7 +122,7 @@ class TransactionControllerTest extends TestCase
      */
     public function testBalance(Transaction $transactionIn, Transaction $transactionOut)
     {
-        $this->post('/balance', [], $this->headers)->seeJsonStructure([
+        $this->post('/transactions/balance', [], $this->headers)->seeJsonStructure([
             'status', 'message', 'userBalance'
         ]);
 
@@ -157,7 +157,7 @@ class TransactionControllerTest extends TestCase
      */
     public function testConfirm($transactionOut)
     {
-        $url = '/transaction/confirm/' . $transactionOut->id;
+        $url = '/transactions/confirm/' . $transactionOut->id;
         $this->post($url, [], $this->headers)->seeJsonStructure([
             'status', 'message'
         ]);
