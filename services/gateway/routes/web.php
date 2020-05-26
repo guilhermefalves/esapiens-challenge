@@ -13,7 +13,7 @@
 
 $router->get('/docs', ['as' => 'docs', function () use ($router) {
     // TODO: preciso criar as docs do projeto
-    return 'Uma documentação muito bem feita :)';
+    return view('docs');
 }]);
 
 $router->group([

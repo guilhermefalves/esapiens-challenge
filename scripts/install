@@ -1,0 +1,4 @@
+#!/bin/bash
+# TODO: for docker/* -> docker-compose up
+# TODO: mysql -u root -p -h 127.0.0.1 -c "create database users character set utf8;"....
+# TODO: for services/* -> composer install -> php artisan migrate

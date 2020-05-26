@@ -1,0 +1,7 @@
+#!/bin/bash
+# Perguntar se o banco já foi criado
+#     salvar em algum arquivo essa info...
+# Se não foi criado, criar (pedindo user/senha)
+# Se foi criado
+#     for services/*
+#         cd $service && ./vendor/bin/phpunit && cd ../

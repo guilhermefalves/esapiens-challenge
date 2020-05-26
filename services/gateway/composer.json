@@ -8,7 +8,8 @@
         "php": "^7.2.5",
         "firebase/php-jwt": "^5.2",
         "guzzlehttp/guzzle": "^6.5",
-        "laravel/lumen-framework": "^7.0"
+        "laravel/lumen-framework": "^7.0",
+        "zircote/swagger-php": "^3.0"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.9.1",
