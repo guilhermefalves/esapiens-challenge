@@ -9,7 +9,12 @@ Para a instalação, há um script responsável por faze-la, para executa-lo:
 ```
 
 A instalação também pode ser feita manualmente, para isso:
-1) Crie um banco de dados para cada um dos services, ou seja, 
+1) Para começar, é necessário *criar os containers* para o projeto, para isso: 
+```bash
+    cd ./docker/mysql && docker-compose up -d
+```
+
+2) Crie um banco de dados para cada um dos services, ou seja, 
 ```bash
     mysql -u $DB_USERNAME -h $DB_HOST -P $DB_PORT -c "CREATE DATABASE $SERVICE CHARACTER SET utf8
 ```
@@ -18,14 +23,11 @@ Por exemplo, para o service de users:
     mysql -u $DB_USERNAME -h $DB_HOST -P $DB_PORT -c "CREATE DATABASE users CHARACTER SET utf8
 ```
 
-2) Em cada service, configure os arquivos *.env*, que são responsáveis pelas configurações. Há um exemplo em .env.example  
-3) *Crie as tabelas* de cada service. Executando:
+3) Em cada service, configure os arquivos *.env*, que são responsáveis pelas configurações. Há um exemplo em .env.example  
+
+4) *Crie as tabelas* de cada service. Executando:
 ```bash
     cd ./services/$SERVICE && php artisan migrate
-```
-
-4) Por fim, é necessário *criar os containers* para o projeto, para isso: 
-```bashcd ./docker/mysql && docker-compose up -d
 ```
 
 ---

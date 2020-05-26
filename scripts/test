@@ -5,3 +5,21 @@
 # Se foi criado
 #     for services/*
 #         cd $service && ./vendor/bin/phpunit && cd ../
+
+
+CREATED_FILE=.db_testing_created
+if [ ! -f "$CREATED_FILE" ]; then
+    # Crio o DB e crio um arquivo para identificar que o DB testing já foi criado
+    QUERY_CREATE="CREATE DATABASE testing CHARACTER SET utf8"
+    mysql -u root -p -h 127.0.0.1 -P 3307 -e "$QUERY_CREATE" && echo " " > $CREATED_FILE
+fi
+
+
+# Percorro os services
+cd ../services
+SERVICES=("comments" "notifications" "transactions" "users")
+for SERVICE in ${SERVICES[@]}; do
+    # E executo os testes em cada um deles
+    cd ./$SERVICE && ./vendor/bin/phpunit
+    cd ../
+done

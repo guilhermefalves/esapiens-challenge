@@ -1,4 +1,51 @@
 #!/bin/bash
-# TODO: for docker/* -> docker-compose up
-# TODO: mysql -u root -p -h 127.0.0.1 -c "create database users character set utf8;"....
-# TODO: for services/* -> composer install -> php artisan migrate
+
+# Instalo os containers do Docker
+cd ../docker
+echo "Criando MySQL"
+cd ./mysql && docker-compose up -d
+
+echo "Criando Redis"
+cd ../redis && docker-compose up -d
+
+# Executo o composer install antes, para dar tempo do MySQL iniciar
+cd ../../services
+# Instalo as dependencias do gateway
+cd gateway
+echo "Instalando dependencias Gateway"
+# composer install
+
+SERVICES=("comments" "notifications" "transactions" "users")
+for SERVICE in ${SERVICES[@]}; do
+    # Executo o composer install em cada service
+    cd ../$SERVICE
+    echo "Instalando dependencias do service: $SERVICE"
+    # composer install
+
+    # Espero o usuário preencher cada .env
+    read -p "Preencha as configurações no arquivo .env ($SERVICE) manualmente e quando estiver pronto tecle enter: " a
+    echo ""
+done
+
+# Crio os bancos no MySQL
+DBS=("comment" "notification" "transaction" "user")
+QUERY_CREATE=""
+for DB in ${DBS[@]}; do
+    QUERY_CREATE+="CREATE DATABASE $DB CHARACTER SET utf8; "
+done
+mysql -u root -p -h 127.0.0.1 -P 3307 -e "$QUERY_CREATE"
+
+# E então vou executar migratios e seeds
+for SERVICE in ${SERVICES[@]}; do
+    cd ../$SERVICE
+    # Executo a migration
+    echo "Executando migrations no service: $SERVICE"
+    php artisan migrate
+
+    # Se o usuário quiser, executo a seed
+    read -p "Deseja executar o seed? [y/n] " SEED
+    if [ "$SEED" = "y" ]; then
+        echo "Executando seed no service: $SERVICE"
+        php artisan db:seed
+    fi
+done
