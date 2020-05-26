@@ -32,7 +32,8 @@ $factory->define(Notification::class, function (Faker $faker) {
         'sended'     => (bool) $sended_at,
         'sended_at'  => $sended_at,
         'readed'     => (bool) $readed_at,
-        'readed_at'  => $readed_at
+        'readed_at'  => $readed_at,
+        'created_at' => $faker->dateTimeThisMonth()
     ];
 });
 

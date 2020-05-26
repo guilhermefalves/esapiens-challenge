@@ -118,7 +118,9 @@ class NotificationController extends BaseCRUD
     public function indexAll(): JsonResponse
     {
         $pageSize = config('database.pageSize');
-        $result   = Notification::where('to', $this->user->id)->paginate($pageSize);
+        $result   = Notification::where('to', $this->user->id)
+            ->orderBy('created_at', 'DESC')
+            ->paginate($pageSize);
         $result   = $result->toArray();
 
         // Recupero os dados e a paginação
@@ -164,6 +166,7 @@ class NotificationController extends BaseCRUD
     {
         $perPage = (int) config('database.pageSize');
         $result   = Notification::where('to', $this->user->id)
+            ->orderBy('created_at', 'DESC')
             ->where('readed', false)
             ->take($perPage);
 
@@ -221,6 +224,7 @@ class NotificationController extends BaseCRUD
         // Busco as notificações que ainda não expiraram
         $result  = Notification::where('to', $this->user->id)
             ->whereDate('created_at', '>=', $maxDate)
+            ->orderBy('created_at', 'DESC')
             ->paginate($perPage)
             ->toArray();
 
