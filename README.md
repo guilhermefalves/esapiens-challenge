@@ -1,5 +1,5 @@
 # eSapiens Challenge
-Projeto criado para o desafio técnico da eSapiens
+Projeto criado para o *desafio técnico* da eSapiens
 
 ---
 ## Install
@@ -32,7 +32,7 @@ Por exemplo, para o service de users:
 
 ---
 ## MySQL
-O MySQL foi escohido como banco do projeto por seu desempenho em pequenos projetos, porém caso seja, necessário é possível troca-lo com extrema facilidade, pois todas as querys foram "escritas" com o Eloquent (ORM - Object Relational Mapping).
+O MySQL foi escohido como banco do projeto por seu desempenho em pequenos projetos, porém caso seja, necessário é possível troca-lo com extrema facilidade, pois todas as querys foram "escritas" com o Eloquent (ORM - Object Relational Mapping).  
 No projeto, foi criado um banco para cada service, porém esses bancos rodam no mesmo server. Em um cenário de produção, o ideal seria os bancos estivessem em services separados, permitindo uma melhor escalabilidade
   
 Dados de acesso:
@@ -47,7 +47,9 @@ Acesso via mysql-client:
 
 ---
 ## Redis
-O Redis foi utilizado diante da necessidade de *controle de número de comentários* por intervalo de tempo. De forma que cada comentário gere uma key no redis (com o padrão "comment-$userID-$postID-$commentID") com um TTL (Time To Live). Então, antes da criação do comentário, é verifica se o número de keys (com o padrão "comment-$userID-*") excede o limite de comentários por intervalo de tempo do sistema. O Redis foi utilizado principalmente por ser um banco de dados in-memory, ou seja, salva seus dados em memória principal e com isso há um ganho enorme em desempenho.  
+O Redis foi utilizado diante da necessidade de *controle de número de comentários* por intervalo de tempo. De forma que cada comentário gere uma key no redis (com o padrão "comment-$userID-$postID-$commentID") com um TTL (Time To Live). Então, antes da criação do comentário, é verifica se o número de keys (com o padrão "comment-$userID-*") excede o limite de comentários por intervalo de tempo do sistema.  
+O Redis foi utilizado principalmente por ser um banco de dados in-memory, ou seja, salva seus dados em memória principal e com isso há um ganho enorme em desempenho.   s
+
 Dados de acesso:
 * Port: 6397
   
@@ -106,7 +108,7 @@ Há um arquivo que executa os testes, para executa-lo:
 ```
   
 É importante que antes de executar os testes, seja criado um banco de dados com o nome "testing"  
-Para criar o banco de dados, execute:
+Para criar o banco de dados, execute (a execução do arquivo .install já *cria o banco*):
 ```bash
     mysql -u $DB_USERNAME -h $DB_HOST -P $DB_PORT -c "CREATE DATABASE testing CHARACTER SET utf8;"
 ```
@@ -125,19 +127,19 @@ Os arquivos contêm exemplos de requests que podem ser feitos pelo Gateway. Tamb
 
 ---
 ## Links
-[GitHub](https://github.com/guilhermefalves/esapiens-challenge) - GitHub do projeto
-[BaseCRUD](https://github.com/guilhermefalves/lumen-base-crud) - CRUD básico para facilitar na criação de diferentes services
+[GitHub](https://github.com/guilhermefalves/esapiens-challenge) - GitHub do projeto  
+[BaseCRUD](https://github.com/guilhermefalves/lumen-base-crud) - CRUD básico para fac[]ilitar na criação de diferentes services  
+[Trello](https://trello.com/b/s1p0SFvE/auxilium5) - Organização das tarefas do projeto (em quadros)  
 
 ## Tecnologias
-[Lumen](https://lumen.laravel.com/docs/7.x) - Framework base para todos os services
-[MySQL](https://dev.mysql.com/doc/refman/8.0/en/) - Banco de dados usado na persistência dos dados, porém pode ser trocado com facilidade
-[Redis](https://redis.io/documentation) - Bando de dados de cache usado no service de comments para contar quantos comentários o usuário fez no intervalo de tempo
-[Docker](https://docs.docker.com/) - Containerização de alguns serviços do projeto
-[DockerCompose](https://docs.docker.com/compose/compose-file/) - Ferramenta para facilitar a criação de containers no projeto
-[PHPUnit](https://phpunit.readthedocs.io/pt_BR/latest/) - Framework usado nos testes unitários do projeto
-[Trello](https://trello.com/b/s1p0SFvE/auxilium5) - Organização das tarefas do projeto (em quadros)
-[Swagger](https://swagger.io/docs/) - Documentação do projeto
-[OpenAPI](https://github.com/OAI/OpenAPI-Specification)
+[Lumen](https://lumen.laravel.com/docs/7.x) - Framework base para todos os services  
+[MySQL](https://dev.mysql.com/doc/refman/8.0/en/) - Banco de dados usado na persistência dos dados, porém pode ser trocado com facilidade  
+[Redis](https://redis.io/documentation) - Bando de dados de cache usado no service de comments para contar quantos comentários o usuário fez no intervalo de tempo  
+[Docker](https://docs.docker.com/) - Containerização de alguns serviços do projeto  
+[DockerCompose](https://docs.docker.com/compose/compose-file/) - Ferramenta para facilitar a criação de containers no projeto  
+[PHPUnit](https://phpunit.readthedocs.io/pt_BR/latest/) - Framework usado nos testes unitários do projeto  
+[Swagger](https://swagger.io/docs/) - Documentação do projeto  
+[OpenAPI](https://github.com/OAI/OpenAPI-Specification)  
 
 ---
 ## Author

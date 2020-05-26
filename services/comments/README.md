@@ -2,6 +2,11 @@
 Service responsável por gerenciar post e comentários
 O ideal seria criar um  serviço a parte para as publicações
 
+# Escalabilidade 
+Como este é um dos principais services do Projeto, é bem provável que sejam feitos diversas requisições a este service. Com isso, algumas medidas podem ser tomadas para tentar amenizar o problema, são elas:
+1) Cachear as requisições por Post, de forma que a busca de comentários em um Post saia sempre de um banco in-memory (ou de cache), o redis por exemplo  
+2) Escalar o service com um load balancer, de forma a distribuir as requisições em diversas máquinas/containers  
+
 # Lumen PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
