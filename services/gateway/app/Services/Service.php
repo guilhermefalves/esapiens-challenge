@@ -4,7 +4,7 @@ namespace App\Services;
 
 use Firebase\JWT\JWT;
 use GuzzleHttp\Client as GuzzleClient;
-use GuzzleHttp\Exception\RequestException as GuzzleException;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Carbon;
 
 /**
@@ -46,20 +46,20 @@ class Service
             'Authorization' => 'Bearer ' . $this->generateJWT()
         ];
 
+        $statusCode = $response = null;
         try {
             // Tento realizar o request
             $client = new GuzzleClient();
             $result = $client->request($method, $url, compact(['json', 'headers']));
-        } catch (GuzzleException $e) {
-            return [
-                'statusCode' => 500,
-                'status'     => 'Erro',
-                'message'    => $e->getMessage()
-            ];
+        } catch (RequestException $e) {
+            $statusCode = $e->getCode();
+            $response   = $e->getResponse()->getBody();
         }
 
-        $statusCode = $result->getStatusCode();
-        $response   = json_decode($result->getBody(), true);
+        $statusCode = ($statusCode) ? $statusCode : $result->getStatusCode();
+        $response   = ($response)   ? $response   : $result->getBody();
+        $response   = json_decode($response, true);
+
         if (json_last_error() !== JSON_ERROR_NONE) {
             return [
                 'statusCode' => 500,
