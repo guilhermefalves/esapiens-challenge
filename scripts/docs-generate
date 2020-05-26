@@ -1,1 +1,7 @@
 #!/bin/bash
+cd ../services/gateway
+./vendor/bin/openapi  --output ./public/swagger \
+    ./app/Http/Controllers \
+    ../users/app/Http/Controllers \
+    ../comments/app/Http/Controllers \
+    ../notifications/app/Http/Controllers

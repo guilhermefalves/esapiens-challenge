@@ -84,6 +84,19 @@ class NotificationController extends BaseCRUD
     }
 
     /**
+     * @OA\Get(
+     *     path="/notifications/all",
+     *     summary="Lista todas as notificações do usuário logado",
+     *     tags={"Notifications"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Erro ao exibir notificações"
+     *     )
+     * )
      * Retorna todas as notfificações de um user ID
      *
      * @return JsonResponse
@@ -102,6 +115,19 @@ class NotificationController extends BaseCRUD
     }
 
     /**
+     * @OA\Get(
+     *     path="/notifications/new",
+     *     summary="Lista todas as novas notificações do usuário logado",
+     *     tags={"Notifications"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Erro ao exibir notificações"
+     *     )
+     * )
      * Retorna as novas notfificações de um user ID
      *
      * @return JsonResponse
@@ -128,6 +154,19 @@ class NotificationController extends BaseCRUD
     }
 
     /**
+     * @OA\Get(
+     *     path="/notifications",
+     *     summary="Lista todas as notificações do usuário que ainda não expiraram",
+     *     tags={"Notifications"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Erro ao exibir notificações"
+     *     )
+     * )
      * Retorna as novas notfificações de um user ID
      *
      * @return JsonResponse
@@ -148,4 +187,32 @@ class NotificationController extends BaseCRUD
         $pagination = Arr::except($result, 'data');
         return $this->response(200, compact(['data', 'pagination']));
     }
+
+    /**
+     * OpenAPI - Docs - Endpoints in BaseCRUD
+     * @OA\Get(
+     *     path="/notifications/{notificationID}",
+     *     summary="Retorna os dados de uma notificação",
+     *     tags={"Notifications"},
+     *     @OA\Parameter(
+     *         name="notificationID",
+     *         in="path",
+     *         description="ID da notificação",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Autorização negada"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Erro ao exibir notificação"
+     *     )
+     * )
+     */
 }

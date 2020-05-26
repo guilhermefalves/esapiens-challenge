@@ -20,7 +20,7 @@ class UserController extends BaseCRUD
     protected $model = User::class;
     protected array $postRules = [
         'name'       => 'string|required|max:100',
-        'email'      => 'string|required|max:50',
+        'email'      => 'email|unique:users|required|max:50',
         'password'   => 'string|required',
         'subscriber' => 'boolean'
     ];
@@ -134,4 +134,53 @@ class UserController extends BaseCRUD
         $encoded = str_replace(['+', '/', '='], ['-', '_', ''], $encoded);
         return $encoded;
     }
+
+    /**
+     * OpenAPI - Docs - Endpoints in BaseCRUD
+     * @OA\Post(
+     *     path="/users",
+     *     summary="Cria um usuário no sistema",
+     *     tags={"Users"},
+     *     @OA\Parameter(
+     *         name="name",
+     *         in="path",
+     *         description="Nome do usuário",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="email",
+     *         in="path",
+     *         description="E-mail do usuário - Usado como login",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="password",
+     *         in="path",
+     *         description="Senha do usuário",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="subscriber",
+     *         in="path",
+     *         description="Identifica se o usuário é assinante (default: false)",
+     *         required=false,
+     *         @OA\Schema(type="boolean")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Autorização negada"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Erro ao exibir notificação"
+     *     )
+     * )
+     */
 }

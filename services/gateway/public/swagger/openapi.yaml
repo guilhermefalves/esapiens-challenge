@@ -1,64 +1,245 @@
 openapi: 3.0.0
 info:
-  title: 'Example API'
+  title: 'eSapiens Challenge API'
   contact:
-    name: 'Support Team'
-    email: support@example.com
+    name: 'Guilherme Alves'
+    email: guihalves20@gmail.com
   version: '1.0'
 paths:
-  '/sample/{category}/things':
-    get:
+  /users:
+    post:
       tags:
-        - yourtag
-      operationId: /sample/category/things
+        - Users
+      summary: 'Cria um usuário no sistema'
       parameters:
         -
-          name: category
+          name: name
           in: path
-          description: 'The category parameter in path'
+          description: 'Nome do usuário'
           required: true
           schema:
             type: string
         -
-          name: criteria
-          in: query
-          description: 'Some optional other parameter'
-          required: false
-          schema:
-            type: string
-      responses:
-        '200':
-          description: 'Returns some sample category things'
-          content:
-            application/json:
-              schema: {  }
-        '400':
-          description: 'Error: Bad request. When required parameters were not supplied.'
-  '/comments/{category}/things':
-    get:
-      tags:
-        - yourtag
-      operationId: /sample/category/things
-      parameters:
-        -
-          name: category
+          name: email
           in: path
-          description: 'The category parameter in path'
+          description: 'E-mail do usuário - Usado como login'
           required: true
           schema:
             type: string
         -
-          name: criteria
-          in: query
-          description: 'Some optional other parameter'
+          name: password
+          in: path
+          description: 'Senha do usuário'
+          required: true
+          schema:
+            type: string
+        -
+          name: subscriber
+          in: path
+          description: 'Identifica se o usuário é assinante (default: false)'
           required: false
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: OK
+        '403':
+          description: 'Autorização negada'
+        '500':
+          description: 'Erro ao exibir notificação'
+  '/comments/post/{postID}':
+    get:
+      tags:
+        - Comments
+      summary: 'Lista todas as publicações de um postagem'
+      operationId: 'App\Http\Controllers\CommentController::indexByPost'
+      parameters:
+        -
+          name: postID
+          in: path
+          description: 'ID do post'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+    delete:
+      tags:
+        - Comments
+      summary: 'Deleta TODOS os comentários de uma postagem'
+      operationId: 'App\Http\Controllers\CommentController::deleteByPost'
+      parameters:
+        -
+          name: postID
+          in: path
+          description: 'ID do post'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+        '403':
+          description: 'Autorização negada'
+        '500':
+          description: 'Erro ao deletar'
+  '/comments/user/{userID}':
+    get:
+      tags:
+        - Comments
+      summary: 'Lista todas as publicações de um usuário'
+      operationId: 'App\Http\Controllers\CommentController::indexByUser'
+      parameters:
+        -
+          name: userID
+          in: path
+          description: 'ID do user'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+  '/comments/{postID}/{userID}':
+    delete:
+      tags:
+        - Comments
+      summary: 'Deleta TODOS os comentários de um usuário em uma postagem'
+      operationId: 'App\Http\Controllers\CommentController::deleteByPostAndUser'
+      parameters:
+        -
+          name: postID
+          in: path
+          description: 'ID do post'
+          required: true
+          schema:
+            type: integer
+        -
+          name: userID
+          in: path
+          description: 'ID do user'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+        '403':
+          description: 'Autorização negada'
+        '500':
+          description: 'Erro ao deletar'
+  '/comments/{commentID}':
+    delete:
+      tags:
+        - Comments
+      summary: 'Deleta um comentário'
+      parameters:
+        -
+          name: commentID
+          in: path
+          description: 'ID do comentário'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+        '403':
+          description: 'Autorização negada'
+        '500':
+          description: 'Erro ao deletar'
+  /comments:
+    post:
+      tags:
+        - Comments
+      summary: 'Cria um comentário em uma postagem'
+      parameters:
+        -
+          name: post_id
+          in: query
+          description: 'ID do post'
+          required: true
+          schema:
+            type: integer
+        -
+          name: coins
+          in: query
+          description: 'Coins usadas para dar destaque ao comentário'
+          required: true
+          schema:
+            type: integer
+        -
+          name: title
+          in: query
+          description: 'Título do comentário'
+          required: true
+          schema:
+            type: string
+        -
+          name: content
+          in: query
+          description: 'Conteúdo do comentário'
+          required: true
           schema:
             type: string
       responses:
         '200':
-          description: 'Returns some sample category things'
-          content:
-            application/json:
-              schema: {  }
-        '400':
-          description: 'Error: Bad request. When required parameters were not supplied.'
+          description: OK
+        '403':
+          description: 'Autorização negada'
+        '500':
+          description: 'Erro ao criar'
+  /notifications/all:
+    get:
+      tags:
+        - Notifications
+      summary: 'Lista todas as notificações do usuário logado'
+      operationId: 'App\Http\Controllers\NotificationController::indexAll'
+      responses:
+        '200':
+          description: OK
+        '500':
+          description: 'Erro ao exibir notificações'
+  /notifications/new:
+    get:
+      tags:
+        - Notifications
+      summary: 'Lista todas as novas notificações do usuário logado'
+      operationId: 'App\Http\Controllers\NotificationController::indexNew'
+      responses:
+        '200':
+          description: OK
+        '500':
+          description: 'Erro ao exibir notificações'
+  /notifications:
+    get:
+      tags:
+        - Notifications
+      summary: 'Lista todas as notificações do usuário que ainda não expiraram'
+      operationId: 'App\Http\Controllers\NotificationController::index'
+      responses:
+        '200':
+          description: OK
+        '500':
+          description: 'Erro ao exibir notificações'
+  '/notifications/{notificationID}':
+    get:
+      tags:
+        - Notifications
+      summary: 'Retorna os dados de uma notificação'
+      parameters:
+        -
+          name: notificationID
+          in: path
+          description: 'ID da notificação'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+        '403':
+          description: 'Autorização negada'
+        '500':
+          description: 'Erro ao exibir notificação'

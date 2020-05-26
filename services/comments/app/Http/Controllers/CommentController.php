@@ -156,6 +156,22 @@ class CommentController extends BaseCRUD
     }
 
     /**
+     * @OA\Get(
+     *     path="/comments/post/{postID}",
+     *     summary="Lista todas as publicações de um postagem",
+     *     tags={"Comments"},
+     *     @OA\Parameter(
+     *         name="postID",
+     *         in="path",
+     *         description="ID do post",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *     )
+     * )
      * Retorna todas as publicações de um Post
      *
      * @param integer $userID
@@ -174,6 +190,22 @@ class CommentController extends BaseCRUD
     }
 
     /**
+     * @OA\Get(
+     *     path="/comments/user/{userID}",
+     *     summary="Lista todas as publicações de um usuário",
+     *     tags={"Comments"},
+     *     @OA\Parameter(
+     *         name="userID",
+     *         in="path",
+     *         description="ID do user",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *     )
+     * )
      * Retorna todas as publicações de um User
      *
      * @param integer $userID
@@ -205,6 +237,30 @@ class CommentController extends BaseCRUD
     }
 
     /**
+     * @OA\Delete(
+     *     path="/comments/post/{postID}",
+     *     summary="Deleta TODOS os comentários de uma postagem",
+     *     tags={"Comments"},
+     *     @OA\Parameter(
+     *         name="postID",
+     *         in="path",
+     *         description="ID do post",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Autorização negada"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Erro ao deletar"
+     *     )
+     * )
      * Função para deletar TODOS os comentários de um post
      *
      * @param integer $postID
@@ -228,6 +284,37 @@ class CommentController extends BaseCRUD
     }
 
     /**
+     * @OA\Delete(
+     *     path="/comments/{postID}/{userID}",
+     *     summary="Deleta TODOS os comentários de um usuário em uma postagem",
+     *     tags={"Comments"},
+     *     @OA\Parameter(
+     *         name="postID",
+     *         in="path",
+     *         description="ID do post",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="userID",
+     *         in="path",
+     *         description="ID do user",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Autorização negada"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Erro ao deletar"
+     *     )
+     * )
      * Função para deletar TODOS os comentários de um usuário em um post
      *
      * @param integer $postID
@@ -355,4 +442,78 @@ class CommentController extends BaseCRUD
         $userBalance = $transactionService->getBalance($coins);
         return $userBalance >= $coins;
     }
+
+    /**
+     * OpenAPI - Docs - Endpoints in BaseCRUD
+     * @OA\Delete(
+     *     path="/comments/{commentID}",
+     *     summary="Deleta um comentário",
+     *     tags={"Comments"},
+     *     @OA\Parameter(
+     *         name="commentID",
+     *         in="path",
+     *         description="ID do comentário",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Autorização negada"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Erro ao deletar"
+     *     )
+     * )
+     ***************************************************************************
+     * @OA\Post(
+     *     path="/comments",
+     *     summary="Cria um comentário em uma postagem",
+     *     tags={"Comments"},
+     *     @OA\Parameter(
+     *         name="post_id",
+     *         in="query",
+     *         description="ID do post",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="coins",
+     *         in="query",
+     *         description="Coins usadas para dar destaque ao comentário",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="title",
+     *         in="query",
+     *         description="Título do comentário",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="content",
+     *         in="query",
+     *         description="Conteúdo do comentário",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Autorização negada"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Erro ao criar"
+     *     )
+     * )
+     */
 }
