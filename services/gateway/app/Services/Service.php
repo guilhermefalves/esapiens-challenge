@@ -42,7 +42,8 @@ class Service
         $url  = $this->url . $endpoint;
         $json = $data;
         $headers = [
-            'Content-Type' => 'application/json',
+            'Content-Type'  => 'application/json',
+            'Accept'        => 'application/json',
             'Authorization' => 'Bearer ' . $this->generateJWT()
         ];
 
@@ -51,15 +52,14 @@ class Service
             // Tento realizar o request
             $client = new GuzzleClient();
             $result = $client->request($method, $url, compact(['json', 'headers']));
+            $response   = $result->getBody();
+            $statusCode = $result->getStatusCode();
         } catch (RequestException $e) {
             $statusCode = $e->getCode();
             $response   = $e->getResponse()->getBody();
         }
 
-        $statusCode = ($statusCode) ? $statusCode : $result->getStatusCode();
-        $response   = ($response)   ? $response   : $result->getBody();
-        $response   = json_decode($response, true);
-
+        $response = json_decode($response, true);
         if (json_last_error() !== JSON_ERROR_NONE) {
             return [
                 'statusCode' => 500,
