@@ -30,6 +30,55 @@ class TransactionController extends Controller
     ];
 
     /**
+     * @OA\Post(
+     *     path="/transactions",
+     *     summary="Cria uma transação",
+     *     tags={"Transactions"},
+     *     @OA\Parameter(
+     *         name="email",
+     *         in="query",
+     *         description="E-mail do usuário - Usado como login",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="password",
+     *         in="query",
+     *         description="Senha do usuário",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="type",
+     *         in="query",
+     *         description="Tipo da transação (enun: in, out)",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="coins",
+     *         in="query",
+     *         description="Quantidade de moedas da transação",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Dados inválidos"
+     *     ),
+     *     @OA\Response(
+     *         response=402,
+     *         description="Créditos insuficientes"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Erro ao exibir notificação"
+     *     )
+     * )
      * Salva uma transaction para um usuário
      *
      * @param Request $request

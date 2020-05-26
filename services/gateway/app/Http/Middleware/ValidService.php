@@ -17,7 +17,9 @@ class ValidService
      * @var array
      */
     public array $services = [
+        'users',
         'comments',
+        'transactions',
         'notifications'
     ];
 

@@ -161,6 +161,20 @@ class CommentController extends BaseCRUD
      *     summary="Lista todas as publicações de um postagem",
      *     tags={"Comments"},
      *     @OA\Parameter(
+     *         name="email",
+     *         in="query",
+     *         description="E-mail do usuário - Usado como login",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="password",
+     *         in="query",
+     *         description="Senha do usuário",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
      *         name="postID",
      *         in="path",
      *         description="ID do post",
@@ -194,6 +208,20 @@ class CommentController extends BaseCRUD
      *     path="/comments/user/{userID}",
      *     summary="Lista todas as publicações de um usuário",
      *     tags={"Comments"},
+     *     @OA\Parameter(
+     *         name="email",
+     *         in="query",
+     *         description="E-mail do usuário - Usado como login",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="password",
+     *         in="query",
+     *         description="Senha do usuário",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
      *     @OA\Parameter(
      *         name="userID",
      *         in="path",
@@ -242,6 +270,20 @@ class CommentController extends BaseCRUD
      *     summary="Deleta TODOS os comentários de uma postagem",
      *     tags={"Comments"},
      *     @OA\Parameter(
+     *         name="email",
+     *         in="query",
+     *         description="E-mail do usuário - Usado como login",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="password",
+     *         in="query",
+     *         description="Senha do usuário",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
      *         name="postID",
      *         in="path",
      *         description="ID do post",
@@ -288,6 +330,20 @@ class CommentController extends BaseCRUD
      *     path="/comments/{postID}/{userID}",
      *     summary="Deleta TODOS os comentários de um usuário em uma postagem",
      *     tags={"Comments"},
+     *     @OA\Parameter(
+     *         name="email",
+     *         in="query",
+     *         description="E-mail do usuário - Usado como login",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="password",
+     *         in="query",
+     *         description="Senha do usuário",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
      *     @OA\Parameter(
      *         name="postID",
      *         in="path",
@@ -450,6 +506,20 @@ class CommentController extends BaseCRUD
      *     summary="Deleta um comentário",
      *     tags={"Comments"},
      *     @OA\Parameter(
+     *         name="email",
+     *         in="query",
+     *         description="E-mail do usuário - Usado como login",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="password",
+     *         in="query",
+     *         description="Senha do usuário",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
      *         name="commentID",
      *         in="path",
      *         description="ID do comentário",
@@ -474,6 +544,20 @@ class CommentController extends BaseCRUD
      *     path="/comments",
      *     summary="Cria um comentário em uma postagem",
      *     tags={"Comments"},
+     *     @OA\Parameter(
+     *         name="email",
+     *         in="query",
+     *         description="E-mail do usuário - Usado como login",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="password",
+     *         in="query",
+     *         description="Senha do usuário",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
      *     @OA\Parameter(
      *         name="post_id",
      *         in="query",
@@ -505,6 +589,10 @@ class CommentController extends BaseCRUD
      *     @OA\Response(
      *         response=200,
      *         description="OK",
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Dados inválidos"
      *     ),
      *     @OA\Response(
      *         response=403,

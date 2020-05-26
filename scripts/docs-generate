@@ -4,4 +4,5 @@ cd ../services/gateway
     ./app/Http/Controllers \
     ../users/app/Http/Controllers \
     ../comments/app/Http/Controllers \
+    ../transactions/app/Http/Controllers \
     ../notifications/app/Http/Controllers

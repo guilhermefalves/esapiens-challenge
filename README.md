@@ -118,6 +118,9 @@ As docs são feitas com a estrutura [OpenApi](https://github.com/OAI/OpenAPI-Spe
     cd ./scripts && ./docs-generate
 ```
 
+Na pasta /docs/requests, existem arquivos .http feitos para a extensão [RestClient](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) do VSCode
+Os arquivos contêm exemplos de requests que podem ser feitos pelo Gateway. Também é possível visualizar esses arquivos (com todos os endpoints do service) dentro da pasta docs de cada service
+
 ---
 ## Links
 [GitHub](https://github.com/guilhermefalves/esapiens-challenge) - GitHub do projeto

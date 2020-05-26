@@ -143,28 +143,28 @@ class UserController extends BaseCRUD
      *     tags={"Users"},
      *     @OA\Parameter(
      *         name="name",
-     *         in="path",
+     *         in="query",
      *         description="Nome do usuário",
      *         required=true,
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
      *         name="email",
-     *         in="path",
+     *         in="query",
      *         description="E-mail do usuário - Usado como login",
      *         required=true,
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
      *         name="password",
-     *         in="path",
+     *         in="query",
      *         description="Senha do usuário",
      *         required=true,
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
      *         name="subscriber",
-     *         in="path",
+     *         in="query",
      *         description="Identifica se o usuário é assinante (default: false)",
      *         required=false,
      *         @OA\Schema(type="boolean")
@@ -172,6 +172,10 @@ class UserController extends BaseCRUD
      *     @OA\Response(
      *         response=200,
      *         description="OK",
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Dados inválidos"
      *     ),
      *     @OA\Response(
      *         response=403,

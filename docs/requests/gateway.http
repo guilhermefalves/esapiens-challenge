@@ -1,9 +1,127 @@
 @baseURL=http://localhost:4010/
 
-@service=comments
-GET {{baseURL}}/{{service}}/post/9
+
+# Cria um usuário
+POST {{baseURL}}/users
 Content-Type: application/json
 Accept: application/json
+
+{
+    "name": "Guilherme",
+    "email": "a@a.com",
+    "password": "123",
+    "subscriber": false
+}
+
+# Retorna os comentários do post 1
+GET {{baseURL}}/comments/post/1
+Content-Type: application/json
+Accept: application/json
+
+{
+    "email": "a@a.com",
+    "password": "123"
+}
+
+# Deletas os comentários do post 1
+DELETE {{baseURL}}/comments/post/1
+Content-Type: application/json
+Accept: application/json
+
+{
+    "email": "a@a.com",
+    "password": "123"
+}
+
+# Retorna os comentários do suário 2
+GET {{baseURL}}/comments/user/2
+Content-Type: application/json
+Accept: application/json
+
+{
+    "email": "a@a.com",
+    "password": "123"
+}
+
+# Deletas os comentários do usuário 1 na postagem 2
+DELETE {{baseURL}}/comments/2/1
+Content-Type: application/json
+Accept: application/json
+
+{
+    "email": "a@a.com",
+    "password": "123"
+}
+
+# Deletas o comentário 5
+DELETE {{baseURL}}/comments/5
+Content-Type: application/json
+Accept: application/json
+
+{
+    "email": "a@a.com",
+    "password": "123"
+}
+
+# Faz um comentário na postagem 9
+POST {{baseURL}}/comments
+Content-Type: application/json
+Accept: application/json
+
+{
+    "email": "a@a.com",
+    "password": "123",
+    "post_id": 9,
+    "title": "Um comentário qualquer",
+    "content": "Estou comentando nessa postagem"
+}
+
+# Realiza uma recarga de saldo
+POST {{baseURL}}/transactions
+Content-Type: application/json
+Accept: application/json
+
+{
+    "email": "a@a.com",
+    "password": "123",
+    "coins": 100,
+    "type": "in"
+}
+
+# Recupera todas as notificações do usuario
+GET {{baseURL}}/notifications/all
+Accept: application/json
+Content-Type: application/json
+
+{
+    "email": "a@a.com",
+    "password": "123"
+}
+
+# Recupera todas as novas notificações do usuário
+GET {{baseURL}}/notifications/new
+Accept: application/json
+Content-Type: application/json
+
+{
+    "email": "a@a.com",
+    "password": "123"
+}
+
+# Recupera as notificações do usuario que ainda não expiraram
+GET {{baseURL}}/notifications
+Accept: application/json
+Content-Type: application/json
+
+{
+    "email": "a@a.com",
+    "password": "123"
+}
+
+# Recupera uma única notificação
+GET {{baseURL}}/notifications/78
+Accept: application/json
+Content-Type: application/json
 
 {
     "email": "a@a.com",

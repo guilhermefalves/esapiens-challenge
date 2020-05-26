@@ -88,6 +88,20 @@ class NotificationController extends BaseCRUD
      *     path="/notifications/all",
      *     summary="Lista todas as notificações do usuário logado",
      *     tags={"Notifications"},
+     *     @OA\Parameter(
+     *         name="email",
+     *         in="query",
+     *         description="E-mail do usuário - Usado como login",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="password",
+     *         in="query",
+     *         description="Senha do usuário",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
      *     @OA\Response(
      *         response=200,
      *         description="OK",
@@ -119,6 +133,20 @@ class NotificationController extends BaseCRUD
      *     path="/notifications/new",
      *     summary="Lista todas as novas notificações do usuário logado",
      *     tags={"Notifications"},
+     *     @OA\Parameter(
+     *         name="email",
+     *         in="query",
+     *         description="E-mail do usuário - Usado como login",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="password",
+     *         in="query",
+     *         description="Senha do usuário",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
      *     @OA\Response(
      *         response=200,
      *         description="OK",
@@ -158,6 +186,20 @@ class NotificationController extends BaseCRUD
      *     path="/notifications",
      *     summary="Lista todas as notificações do usuário que ainda não expiraram",
      *     tags={"Notifications"},
+     *     @OA\Parameter(
+     *         name="email",
+     *         in="query",
+     *         description="E-mail do usuário - Usado como login",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="password",
+     *         in="query",
+     *         description="Senha do usuário",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
      *     @OA\Response(
      *         response=200,
      *         description="OK",
@@ -194,6 +236,34 @@ class NotificationController extends BaseCRUD
      *     path="/notifications/{notificationID}",
      *     summary="Retorna os dados de uma notificação",
      *     tags={"Notifications"},
+     *     @OA\Parameter(
+     *         name="email",
+     *         in="query",
+     *         description="E-mail do usuário - Usado como login",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="password",
+     *         in="query",
+     *         description="Senha do usuário",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="email",
+     *         in="query",
+     *         description="E-mail do usuário - Usado como login",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="password",
+     *         in="query",
+     *         description="Senha do usuário",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
      *     @OA\Parameter(
      *         name="notificationID",
      *         in="path",
