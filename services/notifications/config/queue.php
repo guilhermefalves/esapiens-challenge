@@ -30,6 +30,9 @@ return [
     */
 
     'connections' => [
+        'sync' => [
+            'driver' => 'sync',
+        ],
         'database' => [
             'driver' => 'database',
             'table' => env('QUEUE_TABLE', 'jobs'),

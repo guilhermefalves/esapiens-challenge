@@ -136,11 +136,14 @@ class NotificationController extends BaseCRUD
     {
         $perPage = (int) config('database.pageSize');
         $maxDate = Carbon::now()->sub(config('app.notificationTTL'));
+
+        // Busco as notificações que ainda não expiraram
         $result  = Notification::where('to', $this->user->id)
-            ->whereDate('created_at', '<=', $maxDate)
+            ->whereDate('created_at', '>=', $maxDate)
             ->paginate($perPage)
             ->toArray();
 
+        // Recupero os dados e a paginação
         $data       = $result['data'];
         $pagination = Arr::except($result, 'data');
         return $this->response(200, compact(['data', 'pagination']));
