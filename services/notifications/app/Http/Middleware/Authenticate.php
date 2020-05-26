@@ -3,28 +3,11 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Contracts\Auth\Factory as Auth;
+use Firebase\JWT\{JWT, SignatureInvalidException};
+use Illuminate\Http\JsonResponse;
 
 class Authenticate
 {
-    /**
-     * The authentication guard factory instance.
-     *
-     * @var \Illuminate\Contracts\Auth\Factory
-     */
-    protected $auth;
-
-    /**
-     * Create a new middleware instance.
-     *
-     * @param  \Illuminate\Contracts\Auth\Factory  $auth
-     * @return void
-     */
-    public function __construct(Auth $auth)
-    {
-        $this->auth = $auth;
-    }
-
     /**
      * Handle an incoming request.
      *
@@ -35,10 +18,30 @@ class Authenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if ($this->auth->guard($guard)->guest()) {
-            return response('Unauthorized.', 401);
+        if (!$request->header('Authorization')) {
+            return $this->return401();
+        }
+
+        $jwt = str_replace('Bearer ', '', $request->header('Authorization'));
+        try {
+            JWT::decode($jwt, config('jwt.key'), config('jwt.alg'));
+        } catch (SignatureInvalidException $e) {
+            return $this->return401();
         }
 
         return $next($request);
+    }
+
+    /**
+     * Return an 401 error
+     *
+     * @return JsonResponse
+     */
+    private function return401(): JsonResponse
+    {
+        return response()->json([
+            'status' => 'Unauthorized',
+            'message' => 'Falha no Login'
+        ], 401);
     }
 }

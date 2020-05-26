@@ -1,7 +1,9 @@
 @baseURL=http://localhost:4001
-
+Authorization: Bearer {{jwt}}
+@jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.c01tfKKDkdE5JURLmhJPPIvyrQ89XTDtLgJCgqhCeCs
 # Cria um usuário
 POST {{baseURL}}/users
+Authorization: Bearer {{jwt}}
 Content-Type: application/json
 Accept: application/json
 
@@ -15,11 +17,13 @@ Accept: application/json
 @userID=1
 # Retorna os dados de um usuário
 GET {{baseURL}}/users/{{userID}}
+Authorization: Bearer {{jwt}}
 Accept: application/json
 
 @userID=1
 # Atualiza um usuário
 PUT {{baseURL}}/users/{{userID}}
+Authorization: Bearer {{jwt}}
 Content-Type: application/json
 Accept: application/json
 
@@ -30,10 +34,12 @@ Accept: application/json
 # Deleta um usuário
 @userID=2
 DELETE {{baseURL}}/users/{{userID}}
+Authorization: Bearer {{jwt}}
 Accept: application/json
 
 # Loga um usuário no sistema
 POST {{baseURL}}/login
+Authorization: Bearer {{jwt}}
 Content-Type: application/json
 Accept: application/json
 
@@ -45,4 +51,5 @@ Accept: application/json
 # Verifica se um usuário é assinante
 @userID=2
 POST {{baseURL}}/is/subscriber/{{userID}}
+Authorization: Bearer {{jwt}}
 Accept: application/json

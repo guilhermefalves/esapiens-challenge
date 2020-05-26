@@ -11,13 +11,14 @@
 |
 */
 
-$router->group(['prefix' => 'comments'], function() use ($router) {
-    // TODO: authenticated routes
+$router->group([
+    'middleware' => 'auth', 
+    'prefix' => 'comments'
+], function() use ($router) {
     $router->post('/', 'CommentController@store');
     $router->get('/post/{postID:[0-9]+}', 'CommentController@indexByPost');
     $router->get('/user/{userID:[0-9]+}', 'CommentController@indexByUser');
     $router->delete('/{id:[0-9]+}', 'CommentController@delete');
     $router->delete('/post/{postID:[0-9]+}', 'CommentController@deleteByPost');
     $router->delete('/{postID:[0-9]+}/{userID:[0-9]+}', 'CommentController@deleteByPostAndUser');
-
 });

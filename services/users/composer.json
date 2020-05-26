@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
         "php": "^7.2.5",
+        "firebase/php-jwt": "^5.2",
         "guilhermefalves/lumen-base-crud": "dev-master",
         "laravel/lumen-framework": "^7.0"
     },

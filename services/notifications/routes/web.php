@@ -11,7 +11,10 @@
 |
 */
 
-$router->group(['prefix' => 'notifications'], function() use ($router) {
+$router->group([
+    'middleware' => 'auth',
+    'prefix' => 'notifications'
+], function() use ($router) {
     // TODO: authenticated routes
     $router->get('/', 'NotificationController@index');
     $router->get('/new', 'NotificationController@indexNew');

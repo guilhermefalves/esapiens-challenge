@@ -15,8 +15,10 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->group(['prefix' => 'users'], function() use ($router) {
-    // TODO: authenticated routes
+$router->group([
+    'prefix'     => 'users',
+    'middleware' => 'auth'
+], function() use ($router) {
     $router->post('/', 'UserController@store');
     $router->get('/', 'UserController@index');
     $router->get('/{id:[0-9]+}', 'UserController@show');
@@ -24,8 +26,10 @@ $router->group(['prefix' => 'users'], function() use ($router) {
     $router->delete('/{id:[0-9]+}', 'UserController@delete');
 });
 
-$router->group(['prefix' => 'is'], function() use ($router) {
-    // TODO: authenticated routes
+$router->group([
+    'prefix'     => 'is',
+    'middleware' => 'auth'
+], function() use ($router) {
     $router->post('/subscriber/{id:[0-9]+}', 'UserController@subscriber');
 });
 
