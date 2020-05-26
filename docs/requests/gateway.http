@@ -1,0 +1,11 @@
+@baseURL=http://localhost:4010/
+
+@service=comments
+GET {{baseURL}}/{{service}}/post/9
+Content-Type: application/json
+Accept: application/json
+
+{
+    "email": "a@a.com",
+    "password": "123"
+}
