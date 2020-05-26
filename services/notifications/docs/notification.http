@@ -1,6 +1,7 @@
 @baseURL=http://localhost:4005
-@jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjp7ImlkIjoyLCJuYW1lIjoiR3VpbGhlcm1lIiwiZW1haWwiOiJiQGEuY29tIiwic3Vic2NyaWJlciI6ZmFsc2UsImRlbGV0ZWRfYXQiOm51bGwsImNyZWF0ZWRfYXQiOiIyMDIwLTA1LTIzVDIyOjIxOjU4LjAwMDAwMFoiLCJ1cGRhdGVkX2F0IjoiMjAyMC0wNS0yM1QyMjoyMTo1OC4wMDAwMDBaIn0sImlhdCI6MTU5MDMyOTUzOCwiZXhwIjoxNTkwNDE1OTM4fQ.Bm6LHWdqNUfwTz9aEwgCOzgUDB_4nCKuKmHG5OUdRTQ
+@jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjp7ImlkIjoyLCJuYW1lIjoiR3VpbGhlcm1lIiwiZW1haWwiOiJiQGEuY29tIiwic3Vic2NyaWJlciI6ZmFsc2UsImRlbGV0ZWRfYXQiOm51bGwsImNyZWF0ZWRfYXQiOiIyMDIwLTA1LTIzVDIyOjIxOjU4LjAwMDAwMFoiLCJ1cGRhdGVkX2F0IjoiMjAyMC0wNS0yM1QyMjoyMTo1OC4wMDAwMDBaIn0sImlhdCI6MTU5MDQ0NDAzNSwiZXhwIjoxNTkwNTMwNDM1fQ.Sx8NzNX_enQCdyUlbwb676WFYmeEOpCNdc8BDojtYkI
 
+# Cria uma notificação
 POST {{baseURL}}/notification
 Authorization: Bearer {{jwt}}
 Content-Type: application/json
@@ -13,15 +14,17 @@ Accept: application/json
     "identifier": 5
 }
 
-// Recupera as novas notificações do usuario
+// Recupera uma única notificação
 GET {{baseURL}}/notification/78
 Authorization: Bearer {{jwt}}
 Accept: application/json
 
+// Recupera as novas notificações do usuario
 GET {{baseURL}}/notification
 Authorization: Bearer {{jwt}}
 Accept: application/json
 
+// Recupera todas as novas notificações do usuário
 GET {{baseURL}}/notification/new
 Authorization: Bearer {{jwt}}
 Accept: application/json

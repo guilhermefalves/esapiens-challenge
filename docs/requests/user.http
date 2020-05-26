@@ -1,5 +1,6 @@
 @baseURL=http://localhost:4001
 
+# Cria um usuário
 POST {{baseURL}}/user
 Content-Type: application/json
 Accept: application/json
@@ -11,10 +12,14 @@ Accept: application/json
     "subscriber": false
 }
 
-GET {{baseURL}}/user/1
+@userID=1
+# Retorna os dados de um usuário
+GET {{baseURL}}/user/{{userID}}
 Accept: application/json
 
-PUT {{baseURL}}/user/1
+@userID=1
+# Atualiza um usuário
+PUT {{baseURL}}/user/{{userID}}
 Content-Type: application/json
 Accept: application/json
 
@@ -22,9 +27,12 @@ Accept: application/json
     "subscriber": true
 }
 
-DELETE {{baseURL}}/user/2
+# Deleta um usuário
+@userID=2
+DELETE {{baseURL}}/user/{{userID}}
 Accept: application/json
 
+# Loga um usuário no sistema
 POST {{baseURL}}/login
 Content-Type: application/json
 Accept: application/json
@@ -33,3 +41,8 @@ Accept: application/json
     "email": "a@a.com",
     "password": "123"
 }
+
+# Verifica se um usuário é assinante
+@userID=2
+POST {{baseURL}}/is/subscriber/{{userID}}
+Accept: application/json

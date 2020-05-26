@@ -1,6 +1,7 @@
 @baseURL=http://localhost:4003
-@jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjp7ImlkIjoyLCJuYW1lIjoiR3VpbGhlcm1lIiwiZW1haWwiOiJiQGEuY29tIiwic3Vic2NyaWJlciI6ZmFsc2UsImRlbGV0ZWRfYXQiOm51bGwsImNyZWF0ZWRfYXQiOiIyMDIwLTA1LTIzVDIyOjIxOjU4LjAwMDAwMFoiLCJ1cGRhdGVkX2F0IjoiMjAyMC0wNS0yM1QyMjoyMTo1OC4wMDAwMDBaIn0sImlhdCI6MTU5MDI4MDQxMywiZXhwIjoxNTkwMzY2ODEzfQ.3GwiUECms3rOkc_x31t-ELcQlpByTDbAlLbwSXPHKU4
+@jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjp7ImlkIjoyLCJuYW1lIjoiR3VpbGhlcm1lIiwiZW1haWwiOiJiQGEuY29tIiwic3Vic2NyaWJlciI6ZmFsc2UsImRlbGV0ZWRfYXQiOm51bGwsImNyZWF0ZWRfYXQiOiIyMDIwLTA1LTIzVDIyOjIxOjU4LjAwMDAwMFoiLCJ1cGRhdGVkX2F0IjoiMjAyMC0wNS0yM1QyMjoyMTo1OC4wMDAwMDBaIn0sImlhdCI6MTU5MDM4MDc1MywiZXhwIjoxNTkwNDY3MTUzfQ.QG-6iqEMOyiXvYCex0-ga-fxENc003TpJGbREtNEN6s
 
+# Cria um comentário
 POST {{baseURL}}/comment
 Authorization: Bearer {{jwt}}
 Content-Type: application/json
@@ -9,18 +10,37 @@ Accept: application/json
 {
     "post_id": 9,
     "title": "Um comentário qualquer",
-    "content": "Bla bla bla",
+    "content": "Estou comentando nessa publicação",
     "coins": 10
 }
 
-DELETE {{baseURL}}/comment/39
+# Busca os comments por POST
+@postID=9
+GET {{baseURL}}/comment/post/{{postID}}
 Authorization: Bearer {{jwt}}
 Accept: application/json
 
-DELETE {{baseURL}}/comment/post/8
+# Busca os comments por User
+@userID=2
+GET {{baseURL}}/comment/user/{{userID}}
 Authorization: Bearer {{jwt}}
 Accept: application/json
 
-DELETE {{baseURL}}/comment/5/1
+# Deleta um comentário
+@commentID=39
+DELETE {{baseURL}}/comment/{{commentID}}
+Authorization: Bearer {{jwt}}
+Accept: application/json
+
+# Deleta todos os comentários de um post
+@postID=8
+DELETE {{baseURL}}/comment/post/{{postID}}
+Authorization: Bearer {{jwt}}
+Accept: application/json
+
+# Deleta todos os comentários feitos por um usuário em um post
+@postID=5
+@userID=1
+DELETE {{baseURL}}/comment/{{postID}}/{{userID}}
 Authorization: Bearer {{jwt}}
 Accept: application/json
